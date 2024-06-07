@@ -28,6 +28,7 @@ class TeachingEventRepositoryImpl(
                     reader.readTimetable(termId, semesterId, weeks).map { mapper.toDto(it, semester.name) }
                 }
             }.awaitAll().flatten()
+                .sortedWith(compareBy(TeachingEventDto::day, TeachingEventDto::startTime))
         }
     }
 

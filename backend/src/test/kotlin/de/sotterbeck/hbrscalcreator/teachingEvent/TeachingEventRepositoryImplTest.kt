@@ -1,6 +1,7 @@
 package de.sotterbeck.hbrscalcreator.teachingEvent
 
 import assertk.assertThat
+import assertk.assertions.containsExactly
 import assertk.assertions.containsExactlyInAnyOrder
 import assertk.assertions.isNotNull
 import assertk.assertions.isNull
@@ -37,15 +38,6 @@ class TeachingEventRepositoryImplTest {
     fun setUp() {
         coEvery { reader.readTimetable(any(), any(), any()) } returns listOf(
             mapOf(
-                "day" to "Mo",
-                "startTime" to "08:00",
-                "endTime" to "09:30",
-                "room" to "A123",
-                "event" to "Event 1 Gr.3 (Ü)",
-                "period" to "08.04.2024-01.07.2024  (uKW (ab KW 15))",
-                "instructor" to "Instructor 1"
-            ),
-            mapOf(
                 "day" to "Di",
                 "startTime" to "09:45",
                 "endTime" to "11:15",
@@ -53,6 +45,15 @@ class TeachingEventRepositoryImplTest {
                 "event" to "Event 2 (V)",
                 "period" to "08.04.2024-08.07.2024  (KW 15-28)",
                 "instructor" to "Instructor 2"
+            ),
+            mapOf(
+                "day" to "Mo",
+                "startTime" to "08:00",
+                "endTime" to "09:30",
+                "room" to "A123",
+                "event" to "Event 1 Gr.3 (Ü)",
+                "period" to "08.04.2024-01.07.2024  (uKW (ab KW 15))",
+                "instructor" to "Instructor 1"
             )
         )
         coEvery { evaInfoRepository.findTermId() } returns "1234"
@@ -62,10 +63,10 @@ class TeachingEventRepositoryImplTest {
     }
 
     @Test
-    fun `should return all teaching events from the reader`() {
+    fun `should return all teaching events from the reader in the right order`() {
         val result = runBlocking { uut.findAllTeachingEvents(listOf("#SPLUS42C544")) }
 
-        assertThat(result).containsExactlyInAnyOrder(
+        assertThat(result).containsExactly(
             TeachingEventDto(
                 day = DayOfWeek.MONDAY,
                 startTime = LocalTime.of(8, 0),
