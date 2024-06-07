@@ -41,7 +41,7 @@ class TeachingEventPresenterImplTest {
         val formattedLecture = uut.presentSuccess(listOf(lecture)).first()
 
         assertThat(formattedLecture).all {
-            prop(EventModel::id).isEqualTo("BI1-EinführungInDieAnalysis-Instructor2-Di-09:45-11:15-V")
+            prop(EventModel::id).isEqualTo("BI1-EinfuehrungInDieAnalysis-Instructor2-Di-09:45-11:15-V")
             prop(EventModel::semester).isEqualTo("BI 1")
             prop(EventModel::title).isEqualTo("Einführung in die Analysis (V)")
             prop(EventModel::module).isEqualTo("Einführung in die Analysis")

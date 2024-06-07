@@ -17,8 +17,8 @@ class CombinedTeachingEventKeyGenerator(parsingFactory: TeachingEventParsingFact
 
         val segments = listOf(
             teachingEvent.semester.replace(" ", ""),
-            module.pascalCased(),
-            teachingEvent.instructor.pascalCased(),
+            module.pascalCased().withoutUmlauts().withoutSpecialChars(),
+            teachingEvent.instructor.pascalCased().withoutUmlauts().withoutSpecialChars(),
             teachingEvent.day.getDisplayName(TextStyle.SHORT, Locale.GERMAN).replace(".", ""),
             teachingEvent.startTime.toString(),
             teachingEvent.endTime.toString(),
@@ -46,4 +46,18 @@ class CombinedTeachingEventKeyGenerator(parsingFactory: TeachingEventParsingFact
         }
     }
 
+    private fun String.withoutUmlauts(): String {
+        return this
+            .replace("Ü", "ue")
+            .replace("Ö", "oe")
+            .replace("Ä", "ae")
+            .replace("ß", "ss")
+            .replace("ü", "ue")
+            .replace("ö", "oe")
+            .replace("ä", "ae")
+    }
+
+    private fun String.withoutSpecialChars(): String {
+        return this.replace(Regex("[^A-Za-z0-9]"), "")
+    }
 }
