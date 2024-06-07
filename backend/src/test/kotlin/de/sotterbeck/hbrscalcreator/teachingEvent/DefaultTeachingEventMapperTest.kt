@@ -64,12 +64,12 @@ class DefaultTeachingEventMapperTest {
             val result = uut.toDto(teachingEvent, "bi1")
 
             assertAll {
-                assertThat(result.startDate.year).isEqualTo(2024)
-                assertThat(result.startDate.monthValue).isEqualTo(4)
-                assertThat(result.startDate.dayOfMonth).isEqualTo(8)
-                assertThat(result.endDate.year).isEqualTo(2024)
-                assertThat(result.endDate.monthValue).isEqualTo(7)
-                assertThat(result.endDate.dayOfMonth).isEqualTo(1)
+                assertThat(result.dateOfFirstOccurrence.year).isEqualTo(2024)
+                assertThat(result.dateOfFirstOccurrence.monthValue).isEqualTo(4)
+                assertThat(result.dateOfFirstOccurrence.dayOfMonth).isEqualTo(8)
+                assertThat(result.dateOfLastOccurrence.year).isEqualTo(2024)
+                assertThat(result.dateOfLastOccurrence.monthValue).isEqualTo(7)
+                assertThat(result.dateOfLastOccurrence.dayOfMonth).isEqualTo(1)
             }
     }
 }
