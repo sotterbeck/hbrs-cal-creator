@@ -1,8 +1,4 @@
-import {
-  getSelectedSemesters,
-  SelectedSemestersParams,
-} from '@/lib/selectedSemestersParams';
-import { cn } from '@/lib/utils';
+import { SelectedSemestersParams } from '@/lib/selectedSemestersParams';
 import { SemesterFilter } from '@/app/teachingEvents/semesterFilter';
 import { fetchSemesterNames } from '@/lib/data';
 
@@ -15,8 +11,8 @@ export async function FilterPane({ searchParams }: FilterProps) {
   let semesterNames = await fetchSemesterNames();
   return (
     <>
-      <h2 className="text-xl font-bold mb-2">Filter</h2>
-      <SemesterFilter semesters={semesterNames} />
+      <h2 className="mb-2 text-xl font-bold">Filter</h2>
+      <SemesterFilter semesters={semesterNames.data} />
     </>
   );
 }

@@ -1,10 +1,9 @@
 'use client';
 import { ColumnDef } from '@tanstack/react-table';
-import { TeachingEvent, TeachingEventType } from '@/lib/data';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 
-export const columns: ColumnDef<TeachingEvent>[] = [
+export const columns: ColumnDef<EventModel>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -41,31 +40,28 @@ export const columns: ColumnDef<TeachingEvent>[] = [
     },
   },
   {
-    accessorKey: 'time',
-    header: () => <div className="text-right">Time</div>,
-    cell: ({ row }) => {
-      return <div className="text-right">{row.getValue('time')}</div>;
-    },
+    header: 'Time',
+    accessorFn: (row) => `${row.day}. ${row.startTime}-${row.endTime}`,
   },
   {
     accessorKey: 'room',
     header: 'Room',
   },
   {
-    accessorKey: 'lecturer',
-    header: 'Lecturer',
+    accessorKey: 'instructor',
+    header: 'Instructor',
   },
   {
     accessorKey: 'types',
     header: 'Types',
     cell: ({ row }) => {
-      const types = row.getValue('types') as string[];
+      const types = row.getValue('types') as EventType[];
 
       return (
         <div className="flex gap-1">
           {types.map((type) => (
-            <Badge key={type} variant="secondary">
-              {type.charAt(0)}
+            <Badge key={type.token} variant="secondary">
+              {type.token}
             </Badge>
           ))}
         </div>
@@ -76,21 +72,7 @@ export const columns: ColumnDef<TeachingEvent>[] = [
     accessorKey: 'group',
     header: 'Group',
   },
-  {
-    accessorKey: 'info',
-    header: 'Info',
-  },
 ];
-
-// truncate words function with ellipsis at if it was cut off
-function truncateWords(str: string, wordNumber: number) {
-  const words = str.split(' ');
-
-  if (words.length > wordNumber) {
-    return words.slice(0, wordNumber).join(' ') + '...';
-  }
-  return str;
-}
 
 function truncate(str: string, length: number) {
   return str.length > length ? str.slice(0, length) + '...' : str;

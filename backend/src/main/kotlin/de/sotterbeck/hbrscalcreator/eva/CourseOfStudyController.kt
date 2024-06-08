@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/coursesOfStudy")
+@RequestMapping("/api/coursesOfStudy")
 class CourseOfStudyController(
     private val getAllCoursesOfStudyInteractor: GetAllCoursesOfStudyInteractor,
     private val getAllSemesterNamesInteractor: GetAllSemesterNamesInteractor
@@ -17,7 +17,7 @@ class CourseOfStudyController(
         return ResponseEntity.ok(getAllCoursesOfStudyInteractor())
     }
 
-    @GetMapping("/semesters")
+    @GetMapping("/names")
     suspend fun semesterNames(): ResponseEntity<GetAllSemesterNamesInteractor.Response> {
         return ResponseEntity.ok(getAllSemesterNamesInteractor())
     }

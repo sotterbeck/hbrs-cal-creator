@@ -1,6 +1,5 @@
 'use client';
 
-import { Semester } from '@/lib/data';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   addSemesterToParams,
@@ -13,11 +12,11 @@ import { useState } from 'react';
 import { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 interface SemesterSelectionProps {
-  semesters: Semester[];
+  semesters: string[];
 }
 
 interface SemesterCheckboxProps {
-  semester: Semester;
+  semester: string;
   selectedSemesterIds: string[];
   searchParams: URLSearchParams;
   pathname: string;
@@ -44,7 +43,7 @@ export function SemesterFilter({ semesters }: SemesterSelectionProps) {
       <p className="font-medium">Semester</p>
       {semesters.map((semester) => (
         <SemesterCheckbox
-          key={semester.id}
+          key={semester.replace(' ', '')}
           semester={semester}
           selectedSemesterIds={selectedSemesterIds}
           searchParams={readonlyURLSearchParams}
@@ -71,10 +70,12 @@ function SemesterCheckbox({
   pathname,
   replace,
 }: SemesterCheckboxProps) {
+  const semesterToken = semester.replace(' ', '');
+  
   function handleCheckedChange(checked: boolean) {
     const params = checked
-      ? addSemesterToParams(searchParams, semester.id)
-      : removeSemesterFromParams(searchParams, semester.id);
+      ? addSemesterToParams(searchParams, semesterToken)
+      : removeSemesterFromParams(searchParams, semesterToken);
 
     replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
@@ -82,15 +83,15 @@ function SemesterCheckbox({
   return (
     <div className="flex items-center space-x-2">
       <Checkbox
-        id={semester.id}
-        defaultChecked={selectedSemesterIds.includes(semester.id)}
+        id={semesterToken}
+        defaultChecked={selectedSemesterIds.includes(semesterToken)}
         onCheckedChange={handleCheckedChange}
       />
       <label
-        htmlFor={semester.id}
+        htmlFor={semesterToken}
         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
       >
-        {semester.name}
+        {semester}
       </label>
     </div>
   );

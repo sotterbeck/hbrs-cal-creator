@@ -1,5 +1,4 @@
 'use client';
-import { CourseOfStudy } from '@/lib/data';
 import {
   Card,
   CardContent,
@@ -19,7 +18,7 @@ import { getSelectedSemesters } from '@/lib/selectedSemestersParams';
 export function SemesterCard({
   course,
 }: {
-  course: CourseOfStudy;
+  course: CourseOfStudyModel;
   onSemestersChange?: (semesters: string[]) => void;
   semestersValue?: string[];
 }) {
@@ -69,24 +68,21 @@ export function SemesterCard({
 }
 
 function getCourseIds(abbreviation: string, semesters: string[]) {
-  return semesters.map(
-    (semester) => `${abbreviation.toLowerCase()}${semester}`,
-  );
+  return semesters.map((semester) => `${abbreviation}${semester}`);
 }
 
 function getSelectedCourseSemesters(
   abbreviation: string,
   searchParams: URLSearchParams,
 ) {
-  const selectedSemesterIds = getSelectedSemesters(searchParams);
-  if (selectedSemesterIds.length === 0) {
+  const selectedSemesters = getSelectedSemesters(searchParams);
+  if (selectedSemesters.length === 0) {
     return [];
   }
 
-  let lowercaseAbbreviation = abbreviation.toLowerCase();
-  return selectedSemesterIds
-    .filter((semester) => semester.startsWith(lowercaseAbbreviation))
-    .map((semester) => semester.replace(lowercaseAbbreviation, ''));
+  return selectedSemesters
+    .filter((semester) => semester.startsWith(abbreviation))
+    .map((semester) => semester.replace(abbreviation, ''));
 }
 
 function updateSelectedSemestersInParams(
@@ -98,7 +94,7 @@ function updateSelectedSemestersInParams(
 
   const selectedSemesters = getSelectedSemesters(params);
   const selectedSemestersWithoutCurrentCourseOfStudy = selectedSemesters.filter(
-    (courseId) => !courseId.startsWith(abbreviation.toLowerCase()),
+    (courseId) => !courseId.startsWith(abbreviation),
   );
 
   const newSemesterIds = getCourseIds(abbreviation, semesters);

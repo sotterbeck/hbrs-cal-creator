@@ -1,5 +1,5 @@
 export type SelectedSemestersParams = {
-  semester?: string[];
+  semester?: string[] | string;
 };
 
 export function getSelectedSemestersCount(
@@ -8,17 +8,25 @@ export function getSelectedSemestersCount(
   if (!searchParams.semester) {
     return 0;
   }
-
-  return searchParams.semester.length;
+  return Array.isArray(searchParams.semester)
+    ? searchParams.semester.length
+    : 1;
 }
 
 export function getSelectedSemesters(
   searchParams: SelectedSemestersParams | URLSearchParams,
-) {
+): string[] {
   if (searchParams instanceof URLSearchParams) {
     return searchParams.getAll('semester');
   }
-  return searchParams.semester || [];
+
+  if (!searchParams.semester) {
+    return [];
+  }
+
+  return Array.isArray(searchParams.semester)
+    ? searchParams.semester
+    : [searchParams.semester];
 }
 
 export function removeSemesterFromParams(

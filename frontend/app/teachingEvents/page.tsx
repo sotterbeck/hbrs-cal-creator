@@ -11,7 +11,7 @@ export default async function Page({
 }: {
   searchParams: SelectedSemestersParams;
 }) {
-  const teachingEvents = await fetchTeachingEventsFromSemesters(
+  const teachingEventResponse = await fetchTeachingEventsFromSemesters(
     getSelectedSemesters(searchParams),
   );
 
@@ -21,7 +21,7 @@ export default async function Page({
         <FilterPane searchParams={searchParams} />
       </aside>
       <main className="w-full p-4">
-        <TeachingEventTable teachingEvents={teachingEvents} />
+        <TeachingEventTable teachingEvents={teachingEventResponse.data} />
       </main>
     </div>
   );

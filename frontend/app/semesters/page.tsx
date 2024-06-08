@@ -20,7 +20,7 @@ export default async function Page({
 }: {
   searchParams: SelectedSemestersParams;
 }) {
-  const courses = await fetchCoursesOfStudies();
+  const coursesOfStudiesResponse = await fetchCoursesOfStudies();
   const selectedSemestersCount = getSelectedSemestersCount(searchParams);
 
   return (
@@ -41,7 +41,7 @@ export default async function Page({
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <SemesterGrid courses={courses} />
+      <SemesterGrid courses={coursesOfStudiesResponse.data} />
       <div className="flex items-center justify-between">
         <p>{selectedSemestersCount} Studiengänge / Semester ausgewählt.</p>
         <Button variant="default" asChild>
