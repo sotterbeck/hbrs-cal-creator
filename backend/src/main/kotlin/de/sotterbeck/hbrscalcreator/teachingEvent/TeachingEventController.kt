@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.concurrent.TimeUnit
 
 @RestController
-@RequestMapping("/teachingEvents")
+@RequestMapping("/api/teachingEvents")
 class TeachingEventController(
     private val getAllTeachingEventsInteractor: GetAllTeachingEventsInteractor,
     private val getTeachingEventsInteractor: GetTeachingEventsInteractor,
@@ -40,7 +40,10 @@ class TeachingEventController(
         val response = createICalInteractor(request)
         return ResponseEntity
             .ok()
-            .headers { it[HttpHeaders.CONTENT_DISPOSITION] = "attachment; filename=${response.fileName}" }
+            .headers {
+                it[HttpHeaders.CONTENT_DISPOSITION] = "attachment; filename=${response.fileName}"
+                it[HttpHeaders.CONTENT_TYPE] = "text/calendar"
+            }
             .body(response.iCal)
     }
 }
