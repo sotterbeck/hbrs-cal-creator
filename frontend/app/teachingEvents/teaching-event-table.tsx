@@ -1,7 +1,7 @@
 'use client';
 
-import { DataTable } from '@/app/teachingEvents/dataTable';
-import { columns } from '@/app/teachingEvents/tableColumns';
+import { DataTable } from '@/app/teachingEvents/data-table';
+import { columns } from '@/app/teachingEvents/table-columns';
 
 interface TeachingEventTableProps {
   teachingEvents: EventModel[];

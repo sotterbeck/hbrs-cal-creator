@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import Link from 'next/link';
 import { fetchCoursesOfStudies } from '@/lib/data';
-import { SemesterGrid } from '@/app/semesters/semesterGrid';
+import { SemesterGrid } from '@/app/semesters/semester-grid';
 import { Button } from '@/components/ui/button';
 import {
   getSelectedSemestersCount,

@@ -1,4 +1,4 @@
-import { SemesterCard } from '@/app/semesters/semesterCard';
+import { SemesterCard } from '@/app/semesters/semester-card';
 
 export function SemesterGrid({ courses }: { courses: CourseOfStudyModel[] }) {
   return (

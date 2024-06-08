@@ -1,5 +1,5 @@
 import { SelectedSemestersParams } from '@/lib/selectedSemestersParams';
-import { SemesterFilter } from '@/app/teachingEvents/semesterFilter';
+import { SemesterFilter } from '@/app/teachingEvents/semester-filter';
 import { fetchSemesterNames } from '@/lib/data';
 
 interface FilterProps {

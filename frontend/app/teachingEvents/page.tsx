@@ -3,8 +3,8 @@ import {
   getSelectedSemesters,
   SelectedSemestersParams,
 } from '@/lib/selectedSemestersParams';
-import { FilterPane } from '@/app/teachingEvents/filterPane';
-import { TeachingEventTable } from '@/app/teachingEvents/teachingEventTable';
+import { FilterPane } from '@/app/teachingEvents/filter-pane';
+import { TeachingEventTable } from '@/app/teachingEvents/teaching-event-table';
 
 export default async function Page({
   searchParams,
