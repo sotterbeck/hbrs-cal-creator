@@ -2,7 +2,6 @@ package de.sotterbeck.hbrscalcreator.teachingEvent
 
 import assertk.assertThat
 import assertk.assertions.containsExactly
-import assertk.assertions.containsExactlyInAnyOrder
 import assertk.assertions.isNotNull
 import assertk.assertions.isNull
 import de.sotterbeck.hbrscalcreator.eva.EvaInfoRepository
@@ -104,7 +103,7 @@ class TeachingEventRepositoryImplTest {
 
     @Test
     fun `should return teaching event when it has been found`() {
-        val id = "BCSP1-Event2-Instructor2-Di-09:45-11:15-V"
+        val id = "BCSP1-Event2-Instructor2-Di-0945-1115-V"
 
         val result = runBlocking { uut.findTeachingEventById(id) }
 

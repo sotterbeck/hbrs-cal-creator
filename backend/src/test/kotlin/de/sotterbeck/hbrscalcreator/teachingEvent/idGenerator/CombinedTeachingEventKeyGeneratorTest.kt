@@ -29,6 +29,6 @@ class CombinedTeachingEventKeyGeneratorTest {
 
         val key = keyGenerator.generateKey(teachingEvent)
 
-        assertThat(key).isEqualTo("BI1-EinfuehrungInDieAnalysis-Instructor2St-Mo-08:00-10:00-V");
+        assertThat(key).isEqualTo("BI1-EinfuehrungInDieAnalysis-Instructor2St-Mo-0800-1000-V")
     }
 }

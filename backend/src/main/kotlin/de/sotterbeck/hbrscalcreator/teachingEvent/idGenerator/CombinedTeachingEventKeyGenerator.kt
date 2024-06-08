@@ -20,8 +20,8 @@ class CombinedTeachingEventKeyGenerator(parsingFactory: TeachingEventParsingFact
             module.pascalCased().withoutUmlauts().withoutSpecialChars(),
             teachingEvent.instructor.pascalCased().withoutUmlauts().withoutSpecialChars(),
             teachingEvent.day.getDisplayName(TextStyle.SHORT, Locale.GERMAN).replace(".", ""),
-            teachingEvent.startTime.toString(),
-            teachingEvent.endTime.toString(),
+            teachingEvent.startTime.toString().withoutSpecialChars(),
+            teachingEvent.endTime.toString().withoutSpecialChars(),
             toTypeString(types)
         )
         return segments.joinToString(separator = "-").replace("Ü", "U")
