@@ -8,11 +8,15 @@ interface FilterProps {
 }
 
 export async function FilterPane({ searchParams }: FilterProps) {
-  let semesterNames = await fetchSemesterNames();
+  const semesterNames = await fetchSemesterNames();
+
   return (
-    <>
-      <h2 className="mb-2 text-xl font-bold">Filter</h2>
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold">Filter</h2>
+        <a className="text-sm text-muted-foreground">Clear</a>
+      </div>
       <SemesterFilter semesters={semesterNames.data} />
-    </>
+    </div>
   );
 }
