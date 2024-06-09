@@ -31,6 +31,7 @@ class BiWeeklyICalGenerator : ICalGenerator {
         val eventEntity = TeachingEvents.create(
             title = teachingEvent.eventTitle,
             room = teachingEvent.room,
+            instructor = teachingEvent.instructor,
             start = LocalDateTime.of(teachingEvent.dateOfFirstOccurrence, teachingEvent.startTime),
             end = LocalDateTime.of(teachingEvent.dateOfFirstOccurrence, teachingEvent.endTime),
             period = teachingEvent.period,
@@ -43,6 +44,8 @@ class BiWeeklyICalGenerator : ICalGenerator {
             .build()
 
         vEvent.setSummary(eventEntity.title)
+        vEvent.setDescription(eventEntity.instructor)
+        vEvent.setLocation(eventEntity.room)
         vEvent.setDateStart(eventEntity.start.toUtilDate())
         vEvent.setDateEnd(eventEntity.end.toUtilDate())
         vEvent.setRecurrenceRule(recurrenceRule)

@@ -7,6 +7,7 @@ import java.time.temporal.ChronoField
 class EvenWeekTeachingEvent(
     override val title: String,
     override val room: String,
+    override val instructor: String,
     override val start: LocalDateTime,
     override val end: LocalDateTime,
     override val dateOfLastOccurrence: LocalDate

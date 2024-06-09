@@ -16,6 +16,11 @@ interface TeachingEvent {
     val room: String
 
     /**
+     * The instructor of the event
+     */
+    val instructor: String
+
+    /**
      * The start date and time of the first occurrence of the event
      */
     val start: LocalDateTime

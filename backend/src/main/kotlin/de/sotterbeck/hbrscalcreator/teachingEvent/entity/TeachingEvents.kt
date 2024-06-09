@@ -10,6 +10,7 @@ class TeachingEvents {
         fun create(
             title: String,
             room: String,
+            instructor: String,
             start: LocalDateTime,
             end: LocalDateTime,
             period: String,
@@ -17,12 +18,12 @@ class TeachingEvents {
         ): TeachingEvent {
             return when {
                 period.lowercase().contains("ukw") ->
-                    OddWeekTeachingEvent(title, room, start, end, dateOfLastOccurrence)
+                    OddWeekTeachingEvent(title, room, instructor, start, end, dateOfLastOccurrence)
 
                 period.lowercase().contains("gkw") ->
-                    EvenWeekTeachingEvent(title, room, start, end, dateOfLastOccurrence)
+                    EvenWeekTeachingEvent(title, room, instructor, start, end, dateOfLastOccurrence)
 
-                else -> CommonTeachingEvent(title, room, start, end, dateOfLastOccurrence)
+                else -> CommonTeachingEvent(title, room, instructor, start, end, dateOfLastOccurrence)
             }
         }
 

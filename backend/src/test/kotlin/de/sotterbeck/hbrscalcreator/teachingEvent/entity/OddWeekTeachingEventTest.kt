@@ -19,6 +19,7 @@ class OddWeekTeachingEventTest {
             OddWeekTeachingEvent(
                 title = "Programming 1 (V)",
                 room = "A-123",
+                instructor = "Instructor",
                 start = LocalDateTime.of(dateInEvenWeek, LocalTime.of(8, 0)),
                 end = LocalDateTime.of(dateInEvenWeek, LocalTime.of(9, 30)),
                 dateOfLastOccurrence = LocalDate.of(2024, 7, 8)
@@ -34,6 +35,7 @@ class OddWeekTeachingEventTest {
             OddWeekTeachingEvent(
                 title = "Programming 1 (V)",
                 room = "A-123",
+                instructor = "Instructor",
                 start = LocalDateTime.of(dateInOddWeek, LocalTime.of(8, 0)),
                 end = LocalDateTime.of(dateInOddWeek, LocalTime.of(9, 30)),
                 dateOfLastOccurrence = LocalDate.of(2024, 7, 8)
@@ -48,6 +50,7 @@ class OddWeekTeachingEventTest {
         val teachingEvent = OddWeekTeachingEvent(
             title = "Programming 1 (V)",
             room = "A-123",
+            instructor = "Instructor",
             start = LocalDateTime.of(date, LocalTime.of(8, 0)),
             end = LocalDateTime.of(date, LocalTime.of(9, 30)),
             dateOfLastOccurrence = LocalDate.of(2024, 7, 8)
