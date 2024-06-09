@@ -11,17 +11,17 @@ export default async function Page({
 }: {
   searchParams: SelectedSemestersParams;
 }) {
-  const teachingEventResponse = await fetchTeachingEventsFromSemesters(
+  const teachingEvents = await fetchTeachingEventsFromSemesters(
     getSelectedSemesters(searchParams),
   );
 
   return (
     <div className="flex">
-      <aside className="h-dvh min-w-72 border-r bg-white px-6 py-3">
+      <aside className="sticky top-0 h-dvh min-w-72 border-r bg-white px-6 py-4">
         <FilterPane searchParams={searchParams} />
       </aside>
       <main className="w-full p-4">
-        <TeachingEventTable teachingEvents={teachingEventResponse.data} />
+        <TeachingEventTable teachingEvents={teachingEvents.data} />
       </main>
     </div>
   );

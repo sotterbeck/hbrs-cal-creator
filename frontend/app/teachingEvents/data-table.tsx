@@ -18,17 +18,20 @@ import {
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Loader2 } from 'lucide-react';
 
 interface DataTableProps<TData extends { id: string }, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  onSubmit: (ids: string[]) => void;
+  onExport: (ids: string[]) => void;
+  isExporting: boolean;
 }
 
 export function DataTable<TData extends { id: string }, TValue>({
   columns,
   data,
-  onSubmit,
+  onExport,
+  isExporting,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
@@ -58,16 +61,24 @@ export function DataTable<TData extends { id: string }, TValue>({
           }
           className="max-w-xl"
         />
-        <Button
-          onClick={() => {
-            const ids = table
-              .getFilteredSelectedRowModel()
-              .rows.map((row) => row.id);
-            onSubmit(ids);
-          }}
-        >
-          Export
-        </Button>
+        {isExporting ? (
+          <Button disabled className="w-28">
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Laden ...
+          </Button>
+        ) : (
+          <Button
+            className="w-28"
+            onClick={() => {
+              const ids = table
+                .getFilteredSelectedRowModel()
+                .rows.map((row) => row.id);
+              onExport(ids);
+            }}
+          >
+            Exportieren
+          </Button>
+        )}
       </div>
       <div className="text-nowrap rounded-md border bg-white tabular-nums">
         <Table>
