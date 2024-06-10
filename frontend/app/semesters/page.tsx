@@ -1,11 +1,3 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
 import Link from 'next/link';
 import { fetchCoursesOfStudies } from '@/lib/data';
 import { SemesterGrid } from '@/app/semesters/semester-grid';
@@ -14,6 +6,7 @@ import {
   getSelectedSemestersCount,
   SelectedSemestersParams,
 } from '@/lib/selectedSemestersParams';
+import Title from '@/app/semesters/header';
 
 export default async function Page({
   searchParams,
@@ -24,23 +17,8 @@ export default async function Page({
   const selectedSemestersCount = getSelectedSemestersCount(searchParams);
 
   return (
-    <main className="container mx-auto space-y-6 py-10">
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-        Wähle deine Studiengänge
-      </h1>
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href="/">Home</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Semester</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+    <main className="container space-y-6 py-6">
+      <Title />
       <SemesterGrid courses={coursesOfStudiesResponse.data} />
       <div className="flex items-center justify-between">
         <p>{selectedSemestersCount} Studiengänge / Semester ausgewählt.</p>
