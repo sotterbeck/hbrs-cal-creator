@@ -15,6 +15,7 @@ class TeachingEventsFactoryTest {
         val teachingEvent = TeachingEvents.create(
             title = "Programming 1 (V)",
             room = "A-123",
+            instructor = "Instructor 1",
             start = LocalDateTime.of(2024, 4, 8, 8, 0),
             end = LocalDateTime.of(2024, 4, 8, 9, 30),
             period = periodWithoutEvenOrOddWeek,
@@ -31,6 +32,7 @@ class TeachingEventsFactoryTest {
         val teachingEvent = TeachingEvents.create(
             title = "Programming 1 (V)",
             room = "A-123",
+            instructor = "Instructor 1",
             start = LocalDateTime.of(2024, 4, 8, 8, 0),
             end = LocalDateTime.of(2024, 4, 8, 9, 30),
             period = periodWithOddWeek,
@@ -46,6 +48,7 @@ class TeachingEventsFactoryTest {
 
         val teachingEvent = TeachingEvents.create(
             title = "Programming 1 (V)",
+            instructor = "Instructor 1",
             start = LocalDateTime.of(2024, 4, 29, 8, 0),
             end = LocalDateTime.of(2024, 4, 29, 9, 30),
             room = "A-123",
