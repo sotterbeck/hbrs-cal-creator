@@ -1,4 +1,7 @@
-import {NextRequest, NextResponse} from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { getApiUrl } from '@/lib/data';
+
+const API_URL = getApiUrl();
 
 /**
  * Fetches iCal data for the selected events by proxying the request to the backend.
@@ -13,7 +16,7 @@ export async function GET(request: NextRequest) {
   });
 
   const iCalRes = await fetch(
-    `http://localhost:8080/api/teachingEvents/ical?${urlParams}`,
+    `${API_URL}/api/teachingEvents/ical?${urlParams}`,
   );
 
   if (!iCalRes.ok) {

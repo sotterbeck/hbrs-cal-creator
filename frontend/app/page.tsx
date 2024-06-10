@@ -22,7 +22,7 @@ export default function Home() {
         </div>
         <div className="flex justify-center gap-2">
           <Button asChild>
-            <Link href="/semesters">Los geht's</Link>
+            <Link href="/semesters">Los geht&rsquo;s</Link>
           </Button>
           <Button variant="link" className="text-white" asChild>
             <Link href="https://github.com/sotterbeck/hbrs-cal-creator">

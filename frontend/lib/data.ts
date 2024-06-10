@@ -1,5 +1,11 @@
+const API_URL = getApiUrl();
+
+export function getApiUrl(): string {
+  return process.env.API_URL || 'http://localhost:8080';
+}
+
 export async function fetchCoursesOfStudies(): Promise<CoursesOfStudyResponse> {
-  const res = await fetch('http://localhost:8080/api/coursesOfStudy');
+  const res = await fetch(`${API_URL}/api/coursesOfStudy`);
   if (!res.ok) {
     throw new Error('Failed to fetch courses of study');
   }
@@ -19,9 +25,7 @@ export async function fetchTeachingEventsFromSemesters(
     params.append('semester', semester);
   });
 
-  const res = await fetch(
-    `http://localhost:8080/api/teachingEvents?${params.toString()}`,
-  );
+  const res = await fetch(`${API_URL}/api/teachingEvents?${params.toString()}`);
 
   if (!res.ok) {
     throw new Error('Failed to fetch teaching events');
@@ -31,7 +35,7 @@ export async function fetchTeachingEventsFromSemesters(
 }
 
 export async function fetchSemesterNames(): Promise<SemesterNamesResponse> {
-  const res = await fetch('http://localhost:8080/api/coursesOfStudy/names');
+  const res = await fetch(`${API_URL}/api/coursesOfStudy/names`);
   if (!res.ok) {
     throw new Error('Failed to fetch semester names');
   }
