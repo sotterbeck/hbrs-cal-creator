@@ -12,7 +12,7 @@ export default function HeaderBar({
   children,
 }: HeaderBarProps) {
   return (
-    <header className="sticky top-0 justify-between border-b bg-background/80 py-3 backdrop-blur">
+    <header className="sticky top-0 justify-between border-b bg-background/60 py-3 backdrop-blur">
       <div className="container flex h-12 flex-row items-center justify-between">
         <div>
           <h1 className=" text-xl font-medium">{title}</h1>

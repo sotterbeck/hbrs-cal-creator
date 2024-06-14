@@ -23,7 +23,7 @@ export default async function Page({
           courses={coursesOfStudiesResponse.data}
           className="container pt-6"
         />
-        <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-zinc-50 py-6 md:invisible">
+        <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-accent py-6 md:invisible">
           <div className="container flex justify-end">
             <ContinueButton />
           </div>

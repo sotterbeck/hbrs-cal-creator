@@ -80,7 +80,7 @@ export function DataTable<TData extends { id: string }, TValue>({
           </Button>
         )}
       </div>
-      <div className="text-nowrap rounded-md border bg-white tabular-nums">
+      <div className="text-nowrap rounded-md border bg-background tabular-nums">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

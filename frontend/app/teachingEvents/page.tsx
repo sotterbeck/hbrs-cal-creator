@@ -17,7 +17,7 @@ export default async function Page({
 
   return (
     <div className="flex">
-      <aside className="sticky top-0 h-dvh min-w-72 border-r bg-white px-6 py-4">
+      <aside className="sticky top-0 h-dvh min-w-72 border-r bg-background px-6 py-4">
         <FilterPane searchParams={searchParams} />
       </aside>
       <main className="w-full p-4">

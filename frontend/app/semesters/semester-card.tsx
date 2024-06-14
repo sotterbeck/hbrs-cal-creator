@@ -38,7 +38,7 @@ export function SemesterCard({
 
   return (
     <Card>
-      <CardHeader className="h-32 overflow-hidden rounded-t-lg bg-zinc-50 text-center">
+      <CardHeader className="h-32 overflow-hidden rounded-t-lg bg-accent text-center">
         <CardTitle>{course.abbreviation}</CardTitle>
         <CardDescription>{course.name}</CardDescription>
       </CardHeader>

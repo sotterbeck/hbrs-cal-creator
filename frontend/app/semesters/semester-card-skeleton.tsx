@@ -5,7 +5,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 export default function SemesterCardSkeleton() {
   return (
     <Card>
-      <CardHeader className="h-32 overflow-hidden rounded-t-lg bg-zinc-50 text-center">
+      <CardHeader className="h-32 overflow-hidden rounded-t-lg bg-zinc-50 text-center dark:bg-accent">
         <Skeleton className="mx-auto h-6 w-12" />
         <Skeleton className="mx-auto h-5 w-48" />
       </CardHeader>
