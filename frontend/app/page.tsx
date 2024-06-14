@@ -7,6 +7,7 @@ import {
 } from '@/components/ui/accordion';
 import Image from 'next/image';
 import Link from 'next/link';
+import Footer from '@/app/footer';
 
 export default function Home() {
   return (
@@ -141,25 +142,7 @@ export default function Home() {
           </AccordionItem>
         </Accordion>
       </section>
-      <footer className="bg-zinc-100">
-        <div className="container flex items-center justify-between px-6 py-2">
-          <Link
-            className="text-sm text-muted-foreground hover:underline"
-            href="/privacy"
-          >
-            Datenschutzerklärung
-          </Link>
-          <Button variant="link" className="text-muted-foreground" size="icon">
-            <Image
-              src="/github.svg"
-              alt="GitHub Logo"
-              width={24}
-              height={24}
-              className="fill-red-50"
-            />
-          </Button>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
