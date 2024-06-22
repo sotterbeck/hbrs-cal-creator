@@ -12,6 +12,7 @@ class DefaultGroupParser : EventPropertyParser {
         return eventTitle
             .substringAfter(" Gr.")
             .trimStart()
-            .substringBefore(" ")
+            .substringBefore(" (")
+            .trim()
     }
 }

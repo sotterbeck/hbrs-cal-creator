@@ -31,4 +31,23 @@ class DefaultGroupParserTest {
 
         assertEquals("D", result)
     }
+
+    @Test
+    fun `should return group when title contains wdh with no group`() {
+        val title = "Datenbanken Gr. Wdh. (Ü)"
+
+        val result = uut.parse(title)
+
+        assertEquals("Wdh.", result)
+    }
+
+    @Test
+    fun `should return group when title has wdh group`() {
+        val title = "Datenbanken Gr. Wdh. A (Ü)"
+
+        val result = uut.parse(title)
+
+        assertEquals("Wdh. A", result)
+    }
+
 }
