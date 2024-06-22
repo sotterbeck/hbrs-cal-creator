@@ -5,9 +5,9 @@ import {
   addSemesterToParams,
   getSelectedSemesters,
   removeSemesterFromParams,
-} from '@/lib/selectedSemestersParams';
+} from '@/lib/semester/selectedSemestersParams';
 import { Button } from '@/components/ui/button';
-import { useSearchParamsManipulation } from '@/lib/useSearchParamsManipulation';
+import { useSearchParamsManipulation } from '@/lib/common/useSearchParamsManipulation';
 import { useState } from 'react';
 import { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
@@ -23,7 +23,9 @@ interface SemesterCheckboxProps {
   replace: (path: string, option: NavigateOptions) => void;
 }
 
-export function SemesterFilter({ semesters }: SemesterSelectionProps) {
+export function SemesterFilter({
+  semesters,
+}: Readonly<SemesterSelectionProps>) {
   const { readonlyURLSearchParams, pathname, replace } =
     useSearchParamsManipulation();
 
@@ -69,9 +71,9 @@ function SemesterCheckbox({
   searchParams,
   pathname,
   replace,
-}: SemesterCheckboxProps) {
+}: Readonly<SemesterCheckboxProps>) {
   const semesterToken = semester.replace(' ', '');
-  
+
   function handleCheckedChange(checked: boolean) {
     const params = checked
       ? addSemesterToParams(searchParams, semesterToken)

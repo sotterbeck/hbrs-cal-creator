@@ -13,15 +13,15 @@ import {
   useRouter,
   useSearchParams,
 } from 'next/navigation';
-import { getSelectedSemesters } from '@/lib/selectedSemestersParams';
+import { getSelectedSemesters } from '@/lib/semester/selectedSemestersParams';
 
 export function SemesterCard({
   course,
-}: {
+}: Readonly<{
   course: CourseOfStudyModel;
   onSemestersChange?: (semesters: string[]) => void;
   semestersValue?: string[];
-}) {
+}>) {
   const readOnlySearchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getApiUrl } from '@/lib/data';
+import { getApiUrl } from '@/lib/api/data';
 
 const API_URL = getApiUrl();
 

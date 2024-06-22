@@ -8,7 +8,9 @@ export interface ContinueButtonProps {
   className?: string;
 }
 
-export default function ContinueButton({ className }: ContinueButtonProps) {
+export default function ContinueButton({
+  className,
+}: Readonly<ContinueButtonProps>) {
   const params = useSearchParams();
 
   return (

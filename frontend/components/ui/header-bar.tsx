@@ -10,13 +10,13 @@ export default function HeaderBar({
   title,
   description,
   children,
-}: HeaderBarProps) {
+}: Readonly<HeaderBarProps>) {
   return (
     <header className="sticky top-0 justify-between border-b bg-background/60 py-3 backdrop-blur">
       <div className="container flex h-12 flex-row items-center justify-between">
         <div>
-          <h1 className=" text-xl font-medium">{title}</h1>
-          <p className=" text-sm tabular-nums text-muted-foreground">
+          <h1 className="truncate font-medium leading-7 md:text-xl">{title}</h1>
+          <p className="text-sm tabular-nums text-muted-foreground">
             {description}
           </p>
         </div>

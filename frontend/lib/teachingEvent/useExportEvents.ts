@@ -34,7 +34,7 @@ export function useExportEvents() {
 
     const blob = await response.blob();
     const filename =
-      response.headers.get('Content-Disposition')?.split('filename=')[1] ||
+      response.headers.get('Content-Disposition')?.split('filename=')[1] ??
       'events.ics';
     const url = URL.createObjectURL(blob);
 

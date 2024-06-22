@@ -1,24 +1,28 @@
-'use client';
-
 import { DataTable } from '@/app/teachingEvents/data-table';
 import { columns } from '@/app/teachingEvents/table-columns';
-import { useExportEvents } from '@/lib/useExportEvents';
+import { RowSelectionState } from '@tanstack/react-table';
+import React from 'react';
 
 interface TeachingEventTableProps {
   teachingEvents: EventModel[];
+  rowSelection: RowSelectionState;
+  setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
+  className?: string;
 }
 
 export function TeachingEventTable({
   teachingEvents,
-}: TeachingEventTableProps) {
-  const { isExporting, exportEvents } = useExportEvents();
-
+  rowSelection,
+  setRowSelection,
+  className,
+}: Readonly<TeachingEventTableProps>) {
   return (
     <DataTable
       columns={columns}
       data={teachingEvents}
-      onExport={exportEvents}
-      isExporting={isExporting}
+      rowSelection={rowSelection}
+      setRowSelection={setRowSelection}
+      className={className}
     />
   );
 }

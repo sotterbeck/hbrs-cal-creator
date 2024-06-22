@@ -3,7 +3,7 @@ import {
   ColumnFiltersState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
+  RowSelectionState,
   useReactTable,
 } from '@tanstack/react-table';
 
@@ -15,34 +15,32 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 interface DataTableProps<TData extends { id: string }, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  onExport: (ids: string[]) => void;
-  isExporting: boolean;
+  setRowSelection: Dispatch<SetStateAction<RowSelectionState>>;
+  rowSelection: RowSelectionState;
+  className?: string;
 }
 
 export function DataTable<TData extends { id: string }, TValue>({
   columns,
   data,
-  onExport,
-  isExporting,
-}: DataTableProps<TData, TValue>) {
+  setRowSelection,
+  rowSelection,
+  className,
+}: Readonly<DataTableProps<TData, TValue>>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
+    manualFiltering: true,
     getRowId: (row) => row.id,
     state: {
       columnFilters,
@@ -51,35 +49,7 @@ export function DataTable<TData extends { id: string }, TValue>({
   });
 
   return (
-    <div>
-      <div className="flex items-center justify-between pb-4">
-        <Input
-          placeholder="Filter teaching events..."
-          value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
-          onChange={(event) =>
-            table.getColumn('title')?.setFilterValue(event.target.value)
-          }
-          className="max-w-xl"
-        />
-        {isExporting ? (
-          <Button disabled className="w-28">
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Laden ...
-          </Button>
-        ) : (
-          <Button
-            className="w-28"
-            onClick={() => {
-              const ids = table
-                .getFilteredSelectedRowModel()
-                .rows.map((row) => row.id);
-              onExport(ids);
-            }}
-          >
-            Exportieren
-          </Button>
-        )}
-      </div>
+    <div className={className}>
       <div className="text-nowrap rounded-md border bg-background tabular-nums">
         <Table>
           <TableHeader>
