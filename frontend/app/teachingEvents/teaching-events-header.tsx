@@ -38,10 +38,11 @@ export default function TeachingEventsHeader({
     Object.values(selectedEvents).filter(Boolean).length;
 
   return (
-    <div className="sticky top-0 z-10">
+    <div className="sticky top-0 z-10 backdrop-blur">
       <HeaderBar
         title={'Wähle deine Veranstaltungen'}
         description={`${numberOfSelectedEvents} Veranstaltungen ausgewählt`}
+        className="backdrop-blur-none"
       >
         <div className="flex gap-2">
           <ExportButton
@@ -51,7 +52,7 @@ export default function TeachingEventsHeader({
           <ModeToggle />
         </div>
       </HeaderBar>
-      <div className="bg-zinc-50/50 backdrop-blur dark:bg-black/50">
+      <div className="bg-zinc-50/50 dark:bg-black/50">
         <div className="container">
           <div className="flex w-full items-center space-x-2 py-4">
             <Input
