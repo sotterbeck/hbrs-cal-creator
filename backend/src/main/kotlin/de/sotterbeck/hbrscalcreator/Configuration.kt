@@ -11,6 +11,7 @@ import de.sotterbeck.hbrscalcreator.ical.CreateICalInteractor
 import de.sotterbeck.hbrscalcreator.ical.CreateICalInteractorImpl
 import de.sotterbeck.hbrscalcreator.ical.ICalGenerator
 import de.sotterbeck.hbrscalcreator.reader.ApachePOITimeTableReader
+import de.sotterbeck.hbrscalcreator.reader.CachedTimeTableReader
 import de.sotterbeck.hbrscalcreator.reader.TimeTableReader
 import de.sotterbeck.hbrscalcreator.teachingEvent.*
 import de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator.CombinedTeachingEventKeyGenerator
@@ -18,8 +19,10 @@ import de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator.TeachingEventKeyGe
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.TeachingEventMapper
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.TeachingEventParsingFactory
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.impl.DefaultTeachingEventParsingFactory
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.util.DefaultUriBuilderFactory
 import kotlin.time.Duration.Companion.hours
@@ -59,9 +62,16 @@ class Configuration {
         return EvaExtractor.extractors()
     }
 
+
     @Bean
-    fun timeTableReader(timeTableSource: TimeTableXlsSource): TimeTableReader {
+    fun timeTableReaderImpl(timeTableSource: TimeTableXlsSource): TimeTableReader {
         return ApachePOITimeTableReader(timeTableSource = timeTableSource)
+    }
+
+    @Primary
+    @Bean
+    fun timeTableReader(@Qualifier("timeTableReaderImpl") timeTableReader: TimeTableReader): TimeTableReader {
+        return CachedTimeTableReader(timeTableReader)
     }
 
     @Bean
