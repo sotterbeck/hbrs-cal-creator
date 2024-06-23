@@ -1,8 +1,6 @@
 package de.sotterbeck.hbrscalcreator.downloader
 
-import com.sksamuel.aedile.core.Cache
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
@@ -12,19 +10,14 @@ import java.io.InputStream
 import java.net.URLEncoder
 
 @Component
-class WebTimeTableXlsSource(
-    private val webClient: WebClient,
-    @Qualifier("timeTableCache") private val cache: Cache<String, ByteArray>
-) : TimeTableXlsSource {
+class WebTimeTableXlsSource(private val webClient: WebClient) : TimeTableXlsSource {
 
     private val logger = LoggerFactory.getLogger(WebTimeTableXlsSource::class.java)
 
     override suspend fun fetchTimeTableXls(termId: String, semesterId: String, weeks: List<Int>): InputStream {
         val weeksParam = weeks.joinToString(separator = ";")
 
-        val response = cache.get("$termId-$semesterId-$weeksParam") {
-            fetchTimeTable(weeksParam, semesterId, termId, weeks)
-        }
+        val response = fetchTimeTable(weeksParam, semesterId, termId, weeks)
 
         return ByteArrayInputStream(response)
     }

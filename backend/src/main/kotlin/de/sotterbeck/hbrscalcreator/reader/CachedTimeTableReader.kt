@@ -6,7 +6,7 @@ import kotlin.time.Duration.Companion.hours
 class CachedTimeTableReader(private val delegate: TimeTableReader) : TimeTableReader {
 
     private val cache = cacheBuilder<String, List<Map<String, String>>> {
-        expireAfterWrite = 1.hours
+        expireAfterWrite = 24.hours
     }.build()
 
     override suspend fun readTimetable(

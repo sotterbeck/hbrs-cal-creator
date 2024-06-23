@@ -19,7 +19,7 @@ class CachedTeachingEventRepository(
 ) : TeachingEventRepository {
 
     private val eventIdCache = cacheBuilder<String, TeachingEventDto> {
-        expireAfterWrite = 12.hours
+        expireAfterWrite = 24.hours
     }.build()
 
     override suspend fun findAllTeachingEvents(semesters: List<String>): List<TeachingEventDto> {

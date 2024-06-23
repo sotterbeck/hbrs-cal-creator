@@ -2,7 +2,6 @@ package de.sotterbeck.hbrscalcreator.downloader
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import com.sksamuel.aedile.core.cacheBuilder
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockWebServer
 import org.apache.poi.ss.usermodel.WorkbookFactory
@@ -17,7 +16,6 @@ class WebTimeTableXlsSourceTest {
 
     private lateinit var webClient: WebClient
     private lateinit var server: MockWebServer
-    private val cache = cacheBuilder<String, ByteArray>().build()
 
     private lateinit var uut: WebTimeTableXlsSource
 
@@ -39,7 +37,6 @@ class WebTimeTableXlsSourceTest {
 
         uut = WebTimeTableXlsSource(
             webClient = webClient,
-            cache = cache
         )
 
     }
