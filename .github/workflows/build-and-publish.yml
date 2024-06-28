@@ -50,6 +50,7 @@ jobs:
           context: .  # Root context to include the entire repository for backend build
           file: ./backend/Dockerfile
           push: true
+          load: true
           tags: ${{ steps.meta-backend.outputs.tags }}
           labels: ${{ steps.meta-backend.outputs.labels }}
 
@@ -64,11 +65,12 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend@${{ steps.push-backend.outputs.digest }}
-          options: -d -p 8080:8080 --name backend-container
+          options: --name backend-container -d -p 8080:8080
 
       - name: Wait for backend service to be healthy
         run: |
-          for i in {1..10}; do
+          docker ps
+          for i in {1..50}; do
             if docker exec backend-container curl --fail http://localhost:8080/actuator/health; then
               echo "Backend is healthy!"
               break
@@ -79,7 +81,7 @@ jobs:
           done
 
       - name: Verify backend service is healthy
-        run: curl http://localhost:8080/actuator/health
+        run: curl http://127.0.0.1:8080/actuator/health
 
       - name: Build and push frontend Docker image
         id: push-frontend
@@ -91,7 +93,7 @@ jobs:
           tags: ${{ steps.meta-frontend.outputs.tags }}
           labels: ${{ steps.meta-frontend.outputs.labels }}
           build-args: |
-            BACKEND_URL=http://localhost:8080
+            BACKEND_URL=http://127.0.0.1:8080
 
       - name: Generate artifact attestation for frontend Docker image
         uses: actions/attest-build-provenance@v1
