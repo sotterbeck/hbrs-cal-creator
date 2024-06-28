@@ -60,25 +60,6 @@ jobs:
           subject-digest: ${{ steps.push-backend.outputs.digest }}
           push-to-registry: true
 
-      - name: Start backend container
-        run: docker run -d --name backend -p 8080:8080 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend@${{ steps.push-backend.outputs.digest }}
-
-      - name: Wait for backend service to be healthy
-        run: |
-          for i in {1..15}; do
-            docker ps
-            if docker exec backend curl --fail http://localhost:8080/actuator/health; then
-              echo "Backend is healthy!"
-              break
-            else
-              echo "Waiting for backend to be ready..."
-              sleep 5
-            fi
-          done
-
-      - name: Verify backend service is healthy
-        run: curl http://127.0.0.1:8080/actuator/health
-
       - name: Build and push frontend Docker image
         id: push-frontend
         uses: docker/build-push-action@v5
@@ -88,8 +69,6 @@ jobs:
           push: true
           tags: ${{ steps.meta-frontend.outputs.tags }}
           labels: ${{ steps.meta-frontend.outputs.labels }}
-          build-args: |
-            BACKEND_URL=http://127.0.0.1:8080
 
       - name: Generate artifact attestation for frontend Docker image
         uses: actions/attest-build-provenance@v1
@@ -97,8 +76,3 @@ jobs:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-frontend
           subject-digest: ${{ steps.push-frontend.outputs.digest }}
           push-to-registry: true
-
-      - name: Stop and remove backend container
-        run: |
-          docker stop backend
-          docker rm backend
