@@ -50,7 +50,6 @@ jobs:
           context: .  # Root context to include the entire repository for backend build
           file: ./backend/Dockerfile
           push: true
-          load: true
           tags: ${{ steps.meta-backend.outputs.tags }}
           labels: ${{ steps.meta-backend.outputs.labels }}
 
