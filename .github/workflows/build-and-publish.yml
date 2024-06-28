@@ -78,6 +78,9 @@ jobs:
             fi
           done
 
+      - name: Verify backend service is healthy
+        run: curl http://localhost:8080/actuator/health
+
       - name: Build and push frontend Docker image
         id: push-frontend
         uses: docker/build-push-action@v5
