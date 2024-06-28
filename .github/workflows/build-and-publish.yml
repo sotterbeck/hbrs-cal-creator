@@ -43,15 +43,31 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-frontend
 
-      - name: Build and push backend Docker image
-        id: push-backend
+      - name: Build temp backend Docker image to run the service for frontend build
         uses: docker/build-push-action@v5
         with:
           context: .  # Root context to include the entire repository for backend build
           file: ./backend/Dockerfile
-          push: true
-          tags: ${{ steps.meta-backend.outputs.tags }}
-          labels: ${{ steps.meta-backend.outputs.labels }}
+          tags: temp-backend:latest
+          push: false
+
+      - name: Start backend container
+        uses: addnab/docker-run-action@v3
+        with:
+          image: temp-backend:latest
+          options: -d -p 8080:8080 --name backend-container
+
+      - name: Wait for backend service to be healthy
+        run: |
+          for i in {1..10}; do
+            if docker exec backend-container curl --fail http://localhost:8080/actuator/health; then
+              echo "Backend is healthy!"
+              break
+            else
+              echo "Waiting for backend to be ready..."
+              sleep 5
+            fi
+          done
 
       - name: Build and push frontend Docker image
         id: push-frontend
@@ -62,6 +78,21 @@ jobs:
           push: true
           tags: ${{ steps.meta-frontend.outputs.tags }}
           labels: ${{ steps.meta-frontend.outputs.labels }}
+          build-args: |
+            BACKEND_URL=http://localhost:8080
+
+      - name: Stop backend container
+        run: docker stop backend-container && docker rm backend-container
+
+      - name: Build and Push backend Docker image
+        id: push-backend
+        uses: docker/build-push-action@v5
+        with:
+          context: .  # Root context to include the entire repository for backend build
+          file: ./backend/Dockerfile
+          push: true
+          tags: ${{ steps.meta-backend.outputs.tags }}
+          labels: ${{ steps.meta-backend.outputs.labels }}
 
       - name: Generate artifact attestation for backend Docker image
         uses: actions/attest-build-provenance@v1
