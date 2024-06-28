@@ -43,18 +43,27 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-frontend
 
-      - name: Build temp backend Docker image to run the service for frontend build
+      - name: Build and Push backend Docker image
+        id: push-backend
         uses: docker/build-push-action@v5
         with:
           context: .  # Root context to include the entire repository for backend build
           file: ./backend/Dockerfile
-          tags: temp-backend:latest
-          push: false
+          push: true
+          tags: ${{ steps.meta-backend.outputs.tags }}
+          labels: ${{ steps.meta-backend.outputs.labels }}
+
+      - name: Generate artifact attestation for backend Docker image
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend
+          subject-digest: ${{ steps.push-backend.outputs.digest }}
+          push-to-registry: true
 
       - name: Start backend container
         uses: addnab/docker-run-action@v3
         with:
-          image: temp-backend:latest
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend@${{ steps.push-backend.outputs.digest }}
           options: -d -p 8080:8080 --name backend-container
 
       - name: Wait for backend service to be healthy
@@ -80,26 +89,6 @@ jobs:
           labels: ${{ steps.meta-frontend.outputs.labels }}
           build-args: |
             BACKEND_URL=http://localhost:8080
-
-      - name: Stop backend container
-        run: docker stop backend-container && docker rm backend-container
-
-      - name: Build and Push backend Docker image
-        id: push-backend
-        uses: docker/build-push-action@v5
-        with:
-          context: .  # Root context to include the entire repository for backend build
-          file: ./backend/Dockerfile
-          push: true
-          tags: ${{ steps.meta-backend.outputs.tags }}
-          labels: ${{ steps.meta-backend.outputs.labels }}
-
-      - name: Generate artifact attestation for backend Docker image
-        uses: actions/attest-build-provenance@v1
-        with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend
-          subject-digest: ${{ steps.push-backend.outputs.digest }}
-          push-to-registry: true
 
       - name: Generate artifact attestation for frontend Docker image
         uses: actions/attest-build-provenance@v1
