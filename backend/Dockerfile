@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jdk AS base
+FROM eclipse-temurin:21-jdk AS base
 
 # Backend build stage
 FROM base AS builder
