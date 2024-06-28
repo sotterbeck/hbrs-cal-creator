@@ -3,12 +3,14 @@ package de.sotterbeck.hbrscalcreator.downloader
 import de.sotterbeck.hbrscalcreator.eva.EvaInfoRepository
 import kotlinx.coroutines.runBlocking
 import org.apache.poi.ss.usermodel.WorkbookFactory
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
+@Disabled("This test is disabled because it fetches data from the internet")
 class WebTimeTableXlsSourceIntegrationTest {
 
     @Autowired
