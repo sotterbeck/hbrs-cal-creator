@@ -61,16 +61,13 @@ jobs:
           push-to-registry: true
 
       - name: Start backend container
-        uses: addnab/docker-run-action@v3
-        with:
-          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend@${{ steps.push-backend.outputs.digest }}
-          options: --name backend-container -d -p 8080:8080
+        run: docker run -d --name backend -p 8080:8080 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend@${{ steps.push-backend.outputs.digest }}
 
       - name: Wait for backend service to be healthy
         run: |
-          docker ps
-          for i in {1..50}; do
-            if docker exec backend-container curl --fail http://localhost:8080/actuator/health; then
+          for i in {1..15}; do
+            docker ps
+            if docker exec backend curl --fail http://localhost:8080/actuator/health; then
               echo "Backend is healthy!"
               break
             else
@@ -100,3 +97,8 @@ jobs:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-frontend
           subject-digest: ${{ steps.push-frontend.outputs.digest }}
           push-to-registry: true
+
+      - name: Stop and remove backend container
+        run: |
+          docker stop backend
+          docker rm backend
