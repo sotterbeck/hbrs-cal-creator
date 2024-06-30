@@ -85,7 +85,7 @@ jobs:
           context: ./frontend  # Specific context for frontend build
           file: ./frontend/Dockerfile
           push: true
-          add-hosts: host.docker.internal:host-gateway
+          add-hosts: host.docker.internal:172.17.0.1
           tags: ${{ steps.meta-frontend.outputs.tags }}
           labels: ${{ steps.meta-frontend.outputs.labels }}
 
