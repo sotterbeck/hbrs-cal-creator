@@ -83,9 +83,9 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./frontend  # Specific context for frontend build
-          add-host: docker.host.internal:host-gateway
           file: ./frontend/Dockerfile
           push: true
+          add-hosts: host.docker.internal:host-gateway
           tags: ${{ steps.meta-frontend.outputs.tags }}
           labels: ${{ steps.meta-frontend.outputs.labels }}
 
