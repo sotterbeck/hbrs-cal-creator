@@ -1,7 +1,7 @@
 const API_URL = getApiUrl();
 
 export function getApiUrl(): string {
-  return process.env.API_URL ?? 'http://127.0.0.1:8080';
+  return process.env.API_URL ?? 'http://localhost:8080';
 }
 
 export async function fetchCoursesOfStudies(): Promise<CoursesOfStudyResponse> {
