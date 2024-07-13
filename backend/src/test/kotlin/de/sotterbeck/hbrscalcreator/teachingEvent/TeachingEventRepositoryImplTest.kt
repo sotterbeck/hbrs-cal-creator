@@ -9,7 +9,6 @@ import de.sotterbeck.hbrscalcreator.eva.SemesterDto
 import de.sotterbeck.hbrscalcreator.reader.TimeTableReader
 import de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator.CombinedTeachingEventKeyGenerator
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.impl.DefaultTeachingEventMapper
-import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.impl.DefaultTeachingEventParsingFactory
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -23,13 +22,12 @@ class TeachingEventRepositoryImplTest {
 
     private val reader = mockk<TimeTableReader>()
     private val mapper = DefaultTeachingEventMapper
-    private val parsingFactory = DefaultTeachingEventParsingFactory()
     private val evaInfoRepository = mockk<EvaInfoRepository>()
 
     private val uut = TeachingEventRepositoryImpl(
         reader = reader,
         mapper = mapper,
-        idGenerator = CombinedTeachingEventKeyGenerator(parsingFactory),
+        idGenerator = CombinedTeachingEventKeyGenerator(),
         evaInfoRepository = evaInfoRepository,
     )
 
@@ -103,7 +101,7 @@ class TeachingEventRepositoryImplTest {
 
     @Test
     fun `should return teaching event when it has been found`() {
-        val id = "BCSP1-Event2-Instructor2-Di-0945-1115-V"
+        val id = "BCSP1-Event2V-Instructor2-Di-0945-1115"
 
         val result = runBlocking { uut.findTeachingEventById(id) }
 

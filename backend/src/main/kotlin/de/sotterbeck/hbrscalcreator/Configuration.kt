@@ -81,7 +81,7 @@ class Configuration {
 
     @Bean
     fun teachingEventIdGenerator(parsingFactory: TeachingEventParsingFactory): TeachingEventKeyGenerator {
-        return CombinedTeachingEventKeyGenerator(parsingFactory)
+        return CombinedTeachingEventKeyGenerator()
     }
 
     @Bean

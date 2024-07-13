@@ -3,7 +3,6 @@ package de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import de.sotterbeck.hbrscalcreator.teachingEvent.TeachingEventDto
-import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.impl.DefaultTeachingEventParsingFactory
 import org.junit.jupiter.api.Test
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -11,9 +10,10 @@ import java.time.LocalTime
 
 class CombinedTeachingEventKeyGeneratorTest {
 
+    private val uut = CombinedTeachingEventKeyGenerator()
+
     @Test
     fun `should generate valid key`() {
-        val keyGenerator = CombinedTeachingEventKeyGenerator(DefaultTeachingEventParsingFactory())
         val teachingEvent = TeachingEventDto(
             eventTitle = "Einführung in die Analysis (V)",
             semester = "BI 1",
@@ -27,8 +27,8 @@ class CombinedTeachingEventKeyGeneratorTest {
             period = "08.04.2024-08.07.2024  (KW 15-28)"
         )
 
-        val key = keyGenerator.generateKey(teachingEvent)
+        val key = uut.generateKey(teachingEvent)
 
-        assertThat(key).isEqualTo("BI1-EinfuehrungInDieAnalysis-Instructor2St-Mo-0800-1000-V")
+        assertThat(key).isEqualTo("BI1-EinfuehrungInDieAnalysisV-Instructor2St-Mo-0800-1000")
     }
 }

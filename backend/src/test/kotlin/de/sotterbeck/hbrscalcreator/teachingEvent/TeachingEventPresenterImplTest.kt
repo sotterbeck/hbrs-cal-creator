@@ -17,10 +17,9 @@ import java.time.LocalTime
 
 class TeachingEventPresenterImplTest {
 
-    private val parsingFactory = DefaultTeachingEventParsingFactory()
     private val uut = TeachingEventPresenterImpl(
         DefaultTeachingEventParsingFactory(),
-        CombinedTeachingEventKeyGenerator(parsingFactory)
+        CombinedTeachingEventKeyGenerator()
     )
 
     @Test
@@ -41,7 +40,6 @@ class TeachingEventPresenterImplTest {
         val formattedLecture = uut.presentSuccess(listOf(lecture)).first()
 
         assertThat(formattedLecture).all {
-            prop(EventModel::id).isEqualTo("BI1-EinfuehrungInDieAnalysis-Instructor2-Di-0945-1115-V")
             prop(EventModel::semester).isEqualTo("BI 1")
             prop(EventModel::title).isEqualTo("Einführung in die Analysis (V)")
             prop(EventModel::module).isEqualTo("Einführung in die Analysis")
@@ -80,7 +78,6 @@ class TeachingEventPresenterImplTest {
         val formattedExercise = uut.presentSuccess(listOf(exercise)).first()
 
         assertThat(formattedExercise).all {
-            prop(EventModel::id).isEqualTo("BI1-Event1-Instructor1-Mo-0800-0930-U")
             prop(EventModel::semester).isEqualTo("BI 1")
             prop(EventModel::title).isEqualTo("Event 1 Gr.3 (Ü)")
             prop(EventModel::module).isEqualTo("Event 1")
