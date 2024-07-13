@@ -15,11 +15,13 @@ import de.sotterbeck.hbrscalcreator.reader.CachedTimeTableReader
 import de.sotterbeck.hbrscalcreator.reader.TimeTableReader
 import de.sotterbeck.hbrscalcreator.teachingEvent.*
 import de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator.CombinedTeachingEventKeyGenerator
+import de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator.HashTeachingEventKeyGenerator
 import de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator.TeachingEventKeyGenerator
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.TeachingEventMapper
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.TeachingEventParsingFactory
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.impl.DefaultTeachingEventParsingFactory
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -30,15 +32,23 @@ import kotlin.time.Duration.Companion.hours
 @Configuration
 class Configuration {
 
+    @Value("\${eva.url}")
+    private lateinit var evaUrl: String
+
+    @Value("\${teachingEvent.id-generator.type}")
+    private lateinit var idGeneratorType: String
+
+    @Value("\${teachingEvent.id-generator.hash.algorithm}")
+    private lateinit var idGeneratorAlgorithm: String
+
+
     @Bean
     fun webClient(): WebClient {
-        val baseUrl = "https://eva2.inf.h-brs.de"
-
-        val uriBuilderFactory = DefaultUriBuilderFactory(baseUrl)
+        val uriBuilderFactory = DefaultUriBuilderFactory(evaUrl)
         uriBuilderFactory.encodingMode = DefaultUriBuilderFactory.EncodingMode.NONE
 
         return WebClient.builder()
-            .baseUrl(baseUrl)
+            .baseUrl(evaUrl)
             .uriBuilderFactory(uriBuilderFactory)
             .build()
     }
@@ -81,7 +91,11 @@ class Configuration {
 
     @Bean
     fun teachingEventIdGenerator(parsingFactory: TeachingEventParsingFactory): TeachingEventKeyGenerator {
-        return CombinedTeachingEventKeyGenerator()
+        return when (idGeneratorType) {
+            "combined" -> CombinedTeachingEventKeyGenerator()
+            "hash" -> HashTeachingEventKeyGenerator(idGeneratorAlgorithm)
+            else -> error("Unknown id generator type: $idGeneratorType")
+        }
     }
 
     @Bean
