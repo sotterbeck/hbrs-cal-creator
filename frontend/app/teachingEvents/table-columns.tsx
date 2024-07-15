@@ -34,7 +34,7 @@ export const columns: ColumnDef<EventModel>[] = [
 
       return (
         <div className="font-medium" title={title}>
-          {truncate(title, 50)}
+          {title}
         </div>
       );
     },
@@ -73,7 +73,3 @@ export const columns: ColumnDef<EventModel>[] = [
     header: 'Group',
   },
 ];
-
-function truncate(str: string, length: number) {
-  return str.length > length ? str.slice(0, length) + '...' : str;
-}
