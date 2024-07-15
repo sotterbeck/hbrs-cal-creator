@@ -4,6 +4,13 @@ export function getApiUrl(): string {
   return process.env.API_URL ?? 'http://localhost:8080';
 }
 
+/**
+ * Mapping of semester names that need to be rewritten before sending them to the API.
+ */
+const semesterRewrites: Record<string, string> = {
+  Sprachkurse1: 'Sprachkurse',
+};
+
 export async function fetchCoursesOfStudies(): Promise<CoursesOfStudyResponse> {
   const res = await fetch(`${API_URL}/api/coursesOfStudy`);
   if (!res.ok) {
@@ -19,13 +26,18 @@ export async function fetchTeachingEventsFromSemesters(
     return { data: [] };
   }
 
+  const rewrittenSemesterIds = semesters.map(
+    (semester) => semesterRewrites[semester] ?? semester,
+  );
+
   const params = new URLSearchParams();
 
-  semesters.forEach((semester) => {
-    params.append('semester', semester);
+  rewrittenSemesterIds.forEach((id) => {
+    params.append('semester', id);
   });
 
-  const res = await fetch(`${API_URL}/api/teachingEvents?${params.toString()}`);
+  let url = `${API_URL}/api/teachingEvents?${params.toString()}`;
+  const res = await fetch(url, { cache: 'no-store' });
 
   if (!res.ok) {
     throw new Error('Failed to fetch teaching events');
