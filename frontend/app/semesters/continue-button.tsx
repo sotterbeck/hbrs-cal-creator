@@ -1,9 +1,9 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
 import React, { Suspense } from 'react';
+import { useTransformedSearchParams } from '@/lib/common/useTransformedSearchParams';
 
 export interface ContinueButtonProps {
   className?: string;
@@ -22,7 +22,14 @@ export default function ContinueButton({
 function ContinueButtonWithParams({
   className,
 }: Readonly<ContinueButtonProps>) {
-  const params = useSearchParams();
+  const params = useTransformedSearchParams([
+    {
+      attribute: 'semester',
+      valueMapping: {
+        Sprachkurse1: 'Sprachkurse',
+      },
+    },
+  ]);
 
   return (
     <Button

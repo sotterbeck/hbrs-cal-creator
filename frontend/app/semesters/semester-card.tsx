@@ -101,7 +101,7 @@ function updateSelectedSemestersInParams(
   const newSelectedSemesters = [
     ...selectedSemestersWithoutCurrentCourseOfStudy,
     ...newSemesterIds,
-  ].sort();
+  ].sort((a, b) => a.localeCompare(b));
 
   params.delete('semester');
   newSelectedSemesters.forEach((semester) => {
