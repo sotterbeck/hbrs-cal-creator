@@ -40,7 +40,7 @@ class BiWeeklyICalGenerator : ICalGenerator {
 
         val recurrenceRule = Recurrence.Builder(Frequency.WEEKLY)
             .interval(eventEntity.interval)
-            .until(eventEntity.dateOfLastOccurrence.toUtilDate())
+            .until(eventEntity.dateOfLastOccurrence.plusDays(1).toUtilDate())
             .build()
 
         vEvent.setSummary(eventEntity.title)
