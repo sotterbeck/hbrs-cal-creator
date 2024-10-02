@@ -2,7 +2,7 @@ import SemesterCardSkeleton from '@/app/semesters/semester-card-skeleton';
 import SemesterHeaderBar from '@/app/semesters/semester-header-bar';
 
 export default async function Page() {
-  const numberOfCoursesOfStudies = 9;
+  const numberOfCoursesOfStudies = 8;
   const courses = new Array(numberOfCoursesOfStudies).fill(null);
 
   return (
