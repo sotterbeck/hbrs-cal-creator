@@ -18,6 +18,8 @@ object DefaultTypeProvider : TypeProvider {
         "(Vorlesung und Übung)" to setOf(EventType.LECTURE, EventType.EXERCISE),
         "(Ü/P)" to setOf(EventType.EXERCISE, EventType.PRACTICAL),
         "(V/Ü)" to setOf(EventType.LECTURE, EventType.EXERCISE),
+        "(VÜ)" to setOf(EventType.LECTURE, EventType.EXERCISE),
+        "(SU)" to setOf(EventType.SEMINAR, EventType.EXERCISE),
         "(VÜPS)" to setOf(EventType.LECTURE, EventType.EXERCISE, EventType.PRACTICAL, EventType.SEMINAR),
         "(Tutorium) (Vorlesung und Übung)" to setOf(EventType.TUTORIAL, EventType.LECTURE, EventType.EXERCISE),
     )

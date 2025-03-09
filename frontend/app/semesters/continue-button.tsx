@@ -27,6 +27,8 @@ function ContinueButtonWithParams({
       attribute: 'semester',
       valueMapping: {
         Sprachkurse1: 'Sprachkurse',
+        Wahlpflicht1: 'Wahlpflicht',
+        Zusatzveranstaltungen1: 'Zusatzveranstaltungen',
       },
     },
   ]);

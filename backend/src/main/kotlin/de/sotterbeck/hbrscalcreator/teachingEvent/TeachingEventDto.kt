@@ -5,6 +5,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 data class TeachingEventDto(
+    val id: String,
     val semester: String,
     val day: DayOfWeek,
     val startTime: LocalTime,

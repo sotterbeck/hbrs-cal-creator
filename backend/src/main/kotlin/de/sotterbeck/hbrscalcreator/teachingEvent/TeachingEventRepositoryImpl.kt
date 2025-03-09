@@ -2,7 +2,6 @@ package de.sotterbeck.hbrscalcreator.teachingEvent
 
 import de.sotterbeck.hbrscalcreator.eva.EvaInfoRepository
 import de.sotterbeck.hbrscalcreator.reader.TimeTableReader
-import de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator.TeachingEventKeyGenerator
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.TeachingEventMapper
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Repository
 class TeachingEventRepositoryImpl(
     private val reader: TimeTableReader,
     private val mapper: TeachingEventMapper,
-    private val idGenerator: TeachingEventKeyGenerator,
     private val evaInfoRepository: EvaInfoRepository
 ) : TeachingEventRepository {
 
@@ -36,7 +34,7 @@ class TeachingEventRepositoryImpl(
         val semesterIds = evaInfoRepository.findAllSemesters().map { it.evaId }
         val teachingEvents = findAllTeachingEvents(semesterIds)
 
-        return teachingEvents.find { idGenerator.generateKey(it) == id }
+        return teachingEvents.find { it.id == id }
     }
 
 }

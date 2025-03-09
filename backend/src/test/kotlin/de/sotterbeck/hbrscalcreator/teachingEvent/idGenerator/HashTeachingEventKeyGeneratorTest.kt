@@ -3,11 +3,7 @@ package de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator
 
 import assertk.assertThat
 import assertk.assertions.isNotEqualTo
-import de.sotterbeck.hbrscalcreator.teachingEvent.TeachingEventDto
 import org.junit.jupiter.api.Test
-import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.LocalTime
 
 class HashTeachingEventKeyGeneratorTest {
 
@@ -15,29 +11,23 @@ class HashTeachingEventKeyGeneratorTest {
 
     @Test
     fun `should generate unique keys`() {
-        val teachingEvent1 = TeachingEventDto(
-            eventTitle = "Einführung in die Analysis (V)",
-            semester = "BI 1",
-            instructor = "Instructor 2",
-            day = DayOfWeek.MONDAY,
-            startTime = LocalTime.of(8, 0),
-            endTime = LocalTime.of(10, 0),
-            dateOfFirstOccurrence = LocalDate.of(2024, 4, 8),
-            dateOfLastOccurrence = LocalDate.of(2024, 7, 1),
-            room = "B456",
-            period = "08.04.2024-08.07.2024  (KW 15-28)"
+        val teachingEvent1 = mapOf(
+            "semester" to "BI 1",
+            "event" to "Einführung in die Analysis (V)",
+            "day" to "MO",
+            "startTime" to "08:00",
+            "endTime" to "10:00",
+            "room" to "A123",
+            "instructor" to "Instructor 1",
         )
-        val teachingEvent2 = TeachingEventDto(
-            eventTitle = "Einführung in die Analysis (V)",
-            semester = "BI 1",
-            instructor = "Instructor 2",
-            day = DayOfWeek.TUESDAY,
-            startTime = LocalTime.of(8, 0),
-            endTime = LocalTime.of(10, 0),
-            dateOfFirstOccurrence = LocalDate.of(2024, 4, 8),
-            dateOfLastOccurrence = LocalDate.of(2024, 7, 1),
-            room = "B456",
-            period = "08.04.2024-08.07.2024  (KW 15-28)"
+        val teachingEvent2 = mapOf(
+            "semester" to "BI 2",
+            "event" to "Netze",
+            "day" to "MO",
+            "startTime" to "08:00",
+            "endTime" to "10:00",
+            "room" to "A123",
+            "instructor" to "Instructor 2",
         )
 
         val key1 = uut.generateKey(teachingEvent1)

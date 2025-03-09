@@ -18,13 +18,13 @@ import java.time.LocalTime
 class TeachingEventPresenterImplTest {
 
     private val uut = TeachingEventPresenterImpl(
-        DefaultTeachingEventParsingFactory(),
-        CombinedTeachingEventKeyGenerator()
+        DefaultTeachingEventParsingFactory(CombinedTeachingEventKeyGenerator()),
     )
 
     @Test
     fun `should format lecture`() {
         val lecture = TeachingEventDto(
+            id = "1",
             day = DayOfWeek.TUESDAY,
             startTime = LocalTime.of(9, 45),
             endTime = LocalTime.of(11, 15),
@@ -63,6 +63,7 @@ class TeachingEventPresenterImplTest {
     @Test
     fun `should format exercise`() {
         val exercise = TeachingEventDto(
+            id = "2",
             day = DayOfWeek.MONDAY,
             startTime = LocalTime.of(8, 0),
             endTime = LocalTime.of(9, 30),

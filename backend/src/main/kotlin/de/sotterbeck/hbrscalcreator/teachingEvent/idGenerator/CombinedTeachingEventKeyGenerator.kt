@@ -1,26 +1,14 @@
 package de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator
 
-import de.sotterbeck.hbrscalcreator.teachingEvent.TeachingEventDto
-import java.time.format.TextStyle
 import java.util.*
 
 class CombinedTeachingEventKeyGenerator : TeachingEventKeyGenerator {
 
-    override fun generateKey(teachingEvent: TeachingEventDto): String {
-        val segments = listOf(
-            teachingEvent.semester.replace(" ", ""),
-            teachingEvent.eventTitle.pascalCased().withoutUmlauts().withoutSpecialChars(),
-            teachingEvent.instructor.pascalCased().withoutUmlauts().withoutSpecialChars(),
-            teachingEvent.day.getDisplayName(TextStyle.SHORT, Locale.GERMAN).replace(".", ""),
-            teachingEvent.startTime.toString().withoutSpecialChars(),
-            teachingEvent.endTime.toString().withoutSpecialChars(),
-        )
-        return segments.joinToString(separator = "-").replace("Ü", "U")
-    }
-
-    private fun String.pascalCased(): String {
-        return this.split(" ").joinToString("") {
-            it.replaceFirstChar { char -> char.uppercase() }
+    override fun generateKey(teachingEvent: Map<String, String>): String {
+        return teachingEvent.entries.joinToString(separator = "-") {
+            it.value.withoutUmlauts()
+                .withoutSpecialChars()
+                .lowercase(Locale.getDefault())
         }
     }
 

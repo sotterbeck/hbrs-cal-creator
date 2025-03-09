@@ -1,3 +1,5 @@
+import { isHiddenSemester } from '@/lib/semester/hiddenSemesters';
+
 const API_URL = getApiUrl();
 
 export function getApiUrl(): string {
@@ -9,7 +11,15 @@ export async function fetchCoursesOfStudies(): Promise<CoursesOfStudyResponse> {
   if (!res.ok) {
     throw new Error('Failed to fetch courses of study');
   }
-  return res.json();
+
+  const responseData: CoursesOfStudyResponse = await res.json();
+
+  // Filter out courses that are blacklisted
+  const filteredData = responseData.data.filter(
+    (course) => !isHiddenSemester(course.name),
+  );
+
+  return { data: filteredData };
 }
 
 export async function fetchTeachingEventsFromSemesters(

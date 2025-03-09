@@ -1,7 +1,6 @@
 package de.sotterbeck.hbrscalcreator.teachingEvent
 
 import de.sotterbeck.hbrscalcreator.teachingEvent.TeachingEventResponse.EventModel
-import de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator.TeachingEventKeyGenerator
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.EventType
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.TeachingEventParsingFactory
 import org.springframework.http.HttpStatus
@@ -11,7 +10,6 @@ import java.util.*
 
 class TeachingEventPresenterImpl(
     parsingFactory: TeachingEventParsingFactory,
-    private val keyGenerator: TeachingEventKeyGenerator
 ) : TeachingEventPresenter {
 
     private val moduleParser = parsingFactory.createModuleParser()
@@ -35,10 +33,8 @@ class TeachingEventPresenterImpl(
         val group = groupParser.parse(event.eventTitle).ifBlank { null }
         val module = moduleParser.parse(event.eventTitle)
 
-        val id = keyGenerator.generateKey(teachingEvent = event)
-
         return EventModel(
-            id = id,
+            id = event.id,
             semester = event.semester,
             title = event.eventTitle,
             module = module,

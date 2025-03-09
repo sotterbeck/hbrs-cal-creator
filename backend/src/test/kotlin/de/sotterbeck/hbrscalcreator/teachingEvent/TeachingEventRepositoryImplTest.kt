@@ -7,9 +7,10 @@ import assertk.assertions.isNull
 import de.sotterbeck.hbrscalcreator.eva.EvaInfoRepository
 import de.sotterbeck.hbrscalcreator.eva.SemesterDto
 import de.sotterbeck.hbrscalcreator.reader.TimeTableReader
-import de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator.CombinedTeachingEventKeyGenerator
+import de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator.TeachingEventKeyGenerator
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.impl.DefaultTeachingEventMapper
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
@@ -21,13 +22,13 @@ import java.time.LocalTime
 class TeachingEventRepositoryImplTest {
 
     private val reader = mockk<TimeTableReader>()
-    private val mapper = DefaultTeachingEventMapper
+    private val keyGenerator = mockk<TeachingEventKeyGenerator>(relaxed = true)
+    private val mapper = DefaultTeachingEventMapper(keyGenerator)
     private val evaInfoRepository = mockk<EvaInfoRepository>()
 
     private val uut = TeachingEventRepositoryImpl(
         reader = reader,
         mapper = mapper,
-        idGenerator = CombinedTeachingEventKeyGenerator(),
         evaInfoRepository = evaInfoRepository,
     )
 
@@ -65,6 +66,7 @@ class TeachingEventRepositoryImplTest {
 
         assertThat(result).containsExactly(
             TeachingEventDto(
+                id = "",
                 day = DayOfWeek.MONDAY,
                 startTime = LocalTime.of(8, 0),
                 endTime = LocalTime.of(9, 30),
@@ -77,6 +79,7 @@ class TeachingEventRepositoryImplTest {
                 semester = "BCSP 1"
             ),
             TeachingEventDto(
+                id = "",
                 day = DayOfWeek.TUESDAY,
                 startTime = LocalTime.of(9, 45),
                 endTime = LocalTime.of(11, 15),
@@ -101,6 +104,7 @@ class TeachingEventRepositoryImplTest {
 
     @Test
     fun `should return teaching event when it has been found`() {
+        every { keyGenerator.generateKey(any()) } returns "BCSP1-Event2V-Instructor2-Di-0945-1115"
         val id = "BCSP1-Event2V-Instructor2-Di-0945-1115"
 
         val result = runBlocking { uut.findTeachingEventById(id) }

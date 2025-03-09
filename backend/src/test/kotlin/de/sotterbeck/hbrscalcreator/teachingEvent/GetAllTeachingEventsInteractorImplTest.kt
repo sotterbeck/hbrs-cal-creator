@@ -33,6 +33,7 @@ class GetAllTeachingEventsInteractorImplTest {
 
         coEvery { teachingEventRepository.findAllTeachingEvents(any()) } returns listOf(
             TeachingEventDto(
+                id = "1",
                 day = DayOfWeek.MONDAY,
                 startTime = LocalTime.of(8, 0),
                 endTime = LocalTime.of(9, 30),
@@ -45,6 +46,7 @@ class GetAllTeachingEventsInteractorImplTest {
                 semester = "BI 1",
             ),
             TeachingEventDto(
+                id = "2",
                 day = DayOfWeek.TUESDAY,
                 startTime = LocalTime.of(9, 45),
                 endTime = LocalTime.of(11, 15),
@@ -57,6 +59,7 @@ class GetAllTeachingEventsInteractorImplTest {
                 semester = "BI 1"
             ),
             TeachingEventDto(
+                id = "3",
                 day = DayOfWeek.WEDNESDAY,
                 startTime = LocalTime.of(8, 0),
                 endTime = LocalTime.of(9, 30),
@@ -69,6 +72,7 @@ class GetAllTeachingEventsInteractorImplTest {
                 semester = "BI 2"
             ),
             TeachingEventDto(
+                id = "4",
                 day = DayOfWeek.THURSDAY,
                 startTime = LocalTime.of(9, 45),
                 endTime = LocalTime.of(11, 15),

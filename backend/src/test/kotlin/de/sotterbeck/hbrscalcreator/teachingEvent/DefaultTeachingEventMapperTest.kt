@@ -3,6 +3,7 @@ package de.sotterbeck.hbrscalcreator.teachingEvent
 import assertk.assertAll
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator.CombinedTeachingEventKeyGenerator
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.impl.DefaultTeachingEventMapper
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -10,7 +11,7 @@ import java.time.DayOfWeek
 
 class DefaultTeachingEventMapperTest {
 
-    private val uut = DefaultTeachingEventMapper
+    private val uut = DefaultTeachingEventMapper(CombinedTeachingEventKeyGenerator())
 
     @Test
     fun `should throw exception when keys are missing`() {

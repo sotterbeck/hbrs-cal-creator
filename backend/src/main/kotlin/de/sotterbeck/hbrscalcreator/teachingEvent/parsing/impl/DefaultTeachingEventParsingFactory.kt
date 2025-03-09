@@ -1,5 +1,6 @@
 package de.sotterbeck.hbrscalcreator.teachingEvent.parsing.impl
 
+import de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator.TeachingEventKeyGenerator
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.EventPropertyParser
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.TeachingEventMapper
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.TeachingEventParsingFactory
@@ -12,7 +13,8 @@ import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.TypeProvider
  *
  * To extend support for other terms, implement a new [TeachingEventParsingFactory] with updated parser and mapping implementations.
  */
-class DefaultTeachingEventParsingFactory : TeachingEventParsingFactory {
+class DefaultTeachingEventParsingFactory(private val keyGenerator: TeachingEventKeyGenerator) :
+    TeachingEventParsingFactory {
 
     override fun createModuleParser(): EventPropertyParser {
         return DefaultModuleParser(
@@ -29,6 +31,6 @@ class DefaultTeachingEventParsingFactory : TeachingEventParsingFactory {
     }
 
     override fun createDtoMapper(): TeachingEventMapper {
-        return DefaultTeachingEventMapper
+        return DefaultTeachingEventMapper(keyGenerator)
     }
 }

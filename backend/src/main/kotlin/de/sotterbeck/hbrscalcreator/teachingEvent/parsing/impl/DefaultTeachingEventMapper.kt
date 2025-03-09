@@ -1,6 +1,7 @@
 package de.sotterbeck.hbrscalcreator.teachingEvent.parsing.impl
 
 import de.sotterbeck.hbrscalcreator.teachingEvent.TeachingEventDto
+import de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator.TeachingEventKeyGenerator
 import de.sotterbeck.hbrscalcreator.teachingEvent.parsing.TeachingEventMapper
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -13,7 +14,7 @@ import java.util.*
  *
  * This implementation assumes that the input map contains the following keys: day, startTime, endTime, room, event, period, instructor
  */
-object DefaultTeachingEventMapper : TeachingEventMapper {
+class DefaultTeachingEventMapper(private val keyGenerator: TeachingEventKeyGenerator) : TeachingEventMapper {
 
     private val weekDayFormatter = DateTimeFormatter.ofPattern("E", Locale.GERMAN)
     private val timeFormatter = DateTimeFormatter.ofPattern("H:mm")
@@ -31,6 +32,7 @@ object DefaultTeachingEventMapper : TeachingEventMapper {
         val endDateString = datePeriod.substringAfter("-").trim()
 
         return TeachingEventDto(
+            id = keyGenerator.generateKey(teachingEvent),
             semester = semesterName,
             day = DayOfWeek.from(day),
             startTime = LocalTime.parse(teachingEvent["startTime"] ?: error("Start time is missing"), timeFormatter),

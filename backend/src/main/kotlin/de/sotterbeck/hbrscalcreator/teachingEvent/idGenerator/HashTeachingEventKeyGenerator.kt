@@ -1,11 +1,10 @@
 package de.sotterbeck.hbrscalcreator.teachingEvent.idGenerator
 
-import de.sotterbeck.hbrscalcreator.teachingEvent.TeachingEventDto
 import java.security.MessageDigest
 
 class HashTeachingEventKeyGenerator(private val algorithm: String) : TeachingEventKeyGenerator {
 
-    override fun generateKey(teachingEvent: TeachingEventDto): String {
+    override fun generateKey(teachingEvent: Map<String, String>): String {
         val teachingEventString = teachingEvent.toString()
 
         return teachingEventString.hashed(algorithm)

@@ -50,6 +50,7 @@ class CreateICalInteractorImplTest {
     fun `should return iCal when teaching event found`() {
         val request = CreateICalInteractor.Request(listOf("1"))
         val teachingEvent = TeachingEventDto(
+            id = "1",
             semester = "BCSP 1",
             day = DayOfWeek.MONDAY,
             startTime = LocalTime.of(8, 0),
@@ -73,6 +74,7 @@ class CreateICalInteractorImplTest {
     fun `should return file name with semester`() {
         val request = CreateICalInteractor.Request(listOf("1"))
         val teachingEvent = TeachingEventDto(
+            id = "1",
             semester = "BCSP 1",
             day = DayOfWeek.MONDAY,
             startTime = LocalTime.of(8, 0),

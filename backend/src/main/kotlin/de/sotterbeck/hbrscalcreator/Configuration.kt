@@ -55,14 +55,14 @@ class Configuration {
 
     @Bean
     fun evaHtmlCache(): Cache<String, String> {
-        return cacheBuilder<String, String>() {
+        return cacheBuilder<String, String> {
             expireAfterWrite = 1.hours
         }.build()
     }
 
     @Bean
     fun timeTableCache(): Cache<String, ByteArray> {
-        return cacheBuilder<String, ByteArray>() {
+        return cacheBuilder<String, ByteArray> {
             expireAfterWrite = 24.hours
         }.build()
     }
@@ -85,12 +85,12 @@ class Configuration {
     }
 
     @Bean
-    fun parsingFactory(): TeachingEventParsingFactory {
-        return DefaultTeachingEventParsingFactory()
+    fun parsingFactory(teachingEventIdGenerator: TeachingEventKeyGenerator): TeachingEventParsingFactory {
+        return DefaultTeachingEventParsingFactory(teachingEventIdGenerator)
     }
 
     @Bean
-    fun teachingEventIdGenerator(parsingFactory: TeachingEventParsingFactory): TeachingEventKeyGenerator {
+    fun teachingEventIdGenerator(): TeachingEventKeyGenerator {
         return when (idGeneratorType) {
             "combined" -> CombinedTeachingEventKeyGenerator()
             "hash" -> HashTeachingEventKeyGenerator(idGeneratorAlgorithm)
@@ -104,11 +104,8 @@ class Configuration {
     }
 
     @Bean
-    fun teachingEventPresenter(
-        parsingFactory: TeachingEventParsingFactory,
-        teachingEventIdGenerator: TeachingEventKeyGenerator
-    ): TeachingEventPresenter {
-        return TeachingEventPresenterImpl(parsingFactory, teachingEventIdGenerator)
+    fun teachingEventPresenter(parsingFactory: TeachingEventParsingFactory): TeachingEventPresenter {
+        return TeachingEventPresenterImpl(parsingFactory)
     }
 
     @Bean
