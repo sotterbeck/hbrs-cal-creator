@@ -40,12 +40,14 @@ out/
 .kotlin
 
 ### NextJS ###
+/frontend/node_modules
 /node_modules
 /.pnp
 .pnp.js
 
 /coverage
 
+/frontend/.next/
 /.next/
 /out/
 
