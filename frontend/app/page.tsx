@@ -26,7 +26,7 @@ export default function Home() {
             <Link href="/semesters">Los geht&rsquo;s</Link>
           </Button>
           <Button variant="link" className="text-white" asChild>
-            <Link href="https://github.com/sotterbeck/hbrs-cal-creator">
+            <Link target={"_blank"} href="https://github.com/sotterbeck/hbrs-cal-creator">
               GitHub
             </Link>
           </Button>
