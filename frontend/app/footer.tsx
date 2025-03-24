@@ -12,7 +12,8 @@ export default function Footer() {
         >
           Datenschutzerklärung
         </Link>
-        <Button variant="link" className="text-muted-foreground" size="icon">
+        <Button variant="link" className="text-muted-foreground" size="icon" asChild>
+          <Link href="https://github.com/sotterbeck/hbrs-cal-creator" target="_blank" rel="noopener noreferrer">
           <Image
             src="/github.svg"
             alt="GitHub Logo"
@@ -20,6 +21,7 @@ export default function Footer() {
             height={24}
             className="fill-red-50"
           />
+          </Link>
         </Button>
       </div>
     </footer>
