@@ -2,8 +2,8 @@
 import { ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { useRouter } from "next/navigation";
-import {Button} from "@/components/ui/button";
-import { ChevronLeft} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-react";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 
 interface HeaderBarProps {
