@@ -46,7 +46,7 @@ export function SemesterCard({
         <p className="text-foreground">Semester</p>
         <ToggleGroup
           type="multiple"
-          variant="outline"
+          variant="outlinePrimary"
           className="justify-start"
           onValueChange={handleValueChange}
           defaultValue={getSelectedCourseSemesters(
