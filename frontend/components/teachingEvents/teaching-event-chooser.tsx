@@ -1,10 +1,10 @@
 'use client';
-import TeachingEventList from '@/app/teachingEvents/teaching-event-list';
+import TeachingEventList from '@/components/teachingEvents/teaching-event-list';
 import { useState } from 'react';
-import TeachingEventsHeader from '@/app/teachingEvents/teaching-events-header';
-import ExportButton from '@/app/teachingEvents/export-button';
+import TeachingEventsHeader from '@/components/teachingEvents/teaching-events-header';
+import ExportButton from '@/components/teachingEvents/export-button';
 import { useTeachingEventSearching } from '@/lib/teachingEvent/useTeachingEventSearching';
-import { TeachingEventTable } from '@/app/teachingEvents/teaching-event-table';
+import { TeachingEventTable } from '@/components/teachingEvents/teaching-event-table';
 
 interface TeachingEventChooserProps {
   teachingEvents: EventModel[];

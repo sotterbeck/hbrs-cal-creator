@@ -1,11 +1,11 @@
 import { fetchCoursesOfStudies } from '@/lib/api/data';
-import { SemesterGrid } from '@/app/semesters/semester-grid';
+import { SemesterGrid } from '@/components/semesters/semester-grid';
 import {
   getSelectedSemestersCount,
   SelectedSemestersParams,
 } from '@/lib/semester/selectedSemestersParams';
-import SemesterHeaderBar from '@/app/semesters/semester-header-bar';
-import ContinueButton from '@/app/semesters/continue-button';
+import SemesterHeaderBar from '@/components/semesters/semester-header-bar';
+import ContinueButton from '@/components/semesters/continue-button';
 
 export default async function Page({
   searchParams,

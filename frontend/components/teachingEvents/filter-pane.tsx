@@ -1,4 +1,4 @@
-import { SemesterFilter } from '@/app/teachingEvents/semester-filter';
+import { SemesterFilter } from '@/components/teachingEvents/semester-filter';
 
 interface FilterPaneProps {
   semesterNames: string[];

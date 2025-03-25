@@ -1,5 +1,5 @@
-import { DataTable } from '@/app/teachingEvents/data-table';
-import { columns } from '@/app/teachingEvents/table-columns';
+import { DataTable } from '@/components/teachingEvents/data-table';
+import { columns } from '@/components/teachingEvents/table-columns';
 import { RowSelectionState } from '@tanstack/react-table';
 import React from 'react';
 

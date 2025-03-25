@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
 import { useExportEvents } from '@/lib/teachingEvent/useExportEvents';
-import { SelectedEventsState } from '@/app/teachingEvents/teaching-event-chooser';
+import { SelectedEventsState } from '@/components/teachingEvents/teaching-event-chooser';
 
 interface ExportButtonProps {
   selectedEvents: SelectedEventsState;

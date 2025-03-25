@@ -1,8 +1,8 @@
-import SemesterCardSkeleton from '@/app/semesters/semester-card-skeleton';
-import SemesterHeaderBar from '@/app/semesters/semester-header-bar';
+import SemesterCardSkeleton from '@/components/semesters/semester-card-skeleton';
+import SemesterHeaderBar from '@/components/semesters/semester-header-bar';
 
 export default async function Page() {
-  const numberOfCoursesOfStudies = 8;
+  const numberOfCoursesOfStudies = 10;
   const courses = new Array(numberOfCoursesOfStudies).fill(null);
 
   return (

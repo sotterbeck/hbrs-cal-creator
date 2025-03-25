@@ -1,9 +1,9 @@
-import HeaderBar from '@/components/ui/header-bar';
+import HeaderBar from '@/components/common/header-bar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ListFilter } from 'lucide-react';
 import { ModeToggle } from '@/components/ui/mode-toggle';
-import ExportButton from '@/app/teachingEvents/export-button';
+import ExportButton from '@/components/teachingEvents/export-button';
 import {
   Sheet,
   SheetContent,
@@ -12,10 +12,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { FilterPane } from '@/app/teachingEvents/filter-pane';
+import { FilterPane } from '@/components/teachingEvents/filter-pane';
 import { Dispatch, SetStateAction, Suspense } from 'react';
 import { Spinner } from '@/components/ui/spinner';
-import { SelectedEventsState } from '@/app/teachingEvents/teaching-event-chooser';
+import { SelectedEventsState } from '@/components/teachingEvents/teaching-event-chooser';
 
 interface TeachingEventsHeaderProps {
   selectedEvents: SelectedEventsState;

@@ -1,6 +1,6 @@
-import HeaderBar from '@/components/ui/header-bar';
+import HeaderBar from '@/components/common/header-bar';
 import { ModeToggle } from '@/components/ui/mode-toggle';
-import ContinueButton from '@/app/semesters/continue-button';
+import ContinueButton from '@/components/semesters/continue-button';
 
 export interface SemesterHeaderBarProps {
   numberOfSelectedSemesters: number;

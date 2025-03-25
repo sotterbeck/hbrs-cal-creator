@@ -6,7 +6,7 @@ import {
   getSelectedSemesters,
   SelectedSemestersParams,
 } from '@/lib/semester/selectedSemestersParams';
-import TeachingEventChooser from '@/app/teachingEvents/teaching-event-chooser';
+import TeachingEventChooser from '@/components/teachingEvents/teaching-event-chooser';
 
 export default async function Page({
   searchParams,

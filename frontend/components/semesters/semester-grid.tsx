@@ -1,4 +1,4 @@
-import { SemesterCard } from '@/app/semesters/semester-card';
+import { SemesterCard } from '@/components/semesters/semester-card';
 import { twMerge } from 'tailwind-merge';
 
 interface SemesterGridProps {

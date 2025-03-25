@@ -1,7 +1,7 @@
-import TeachingEventCard from '@/app/teachingEvents/teaching-event-card';
+import TeachingEventCard from '@/components/teachingEvents/teaching-event-card';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
-import { SelectedEventsState } from '@/app/teachingEvents/teaching-event-chooser';
+import { SelectedEventsState } from '@/components/teachingEvents/teaching-event-chooser';
 
 interface TeachingEventListProps {
   teachingEvents: EventModel[];
