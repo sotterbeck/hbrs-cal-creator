@@ -46,8 +46,8 @@ class BiWeeklyICalGenerator : ICalGenerator {
         vEvent.setSummary(eventEntity.title)
         vEvent.setDescription(eventEntity.instructor)
         vEvent.setLocation(eventEntity.room)
-        vEvent.setDateStart(eventEntity.start.toUtilDate())
-        vEvent.setDateEnd(eventEntity.end.toUtilDate())
+        vEvent.setDateStart(eventEntity.start.toUtilDate(), true)
+        vEvent.setDateEnd(eventEntity.end.toUtilDate(), true)
         vEvent.setRecurrenceRule(recurrenceRule)
 
         return vEvent
