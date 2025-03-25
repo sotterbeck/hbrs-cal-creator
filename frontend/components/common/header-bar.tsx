@@ -1,10 +1,15 @@
-"use client"
+'use client';
 import { ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
-import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { ChevronLeft } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface HeaderBarProps {
   title: string;
@@ -28,23 +33,31 @@ export default function HeaderBar({
       )}
     >
       <div className="container flex h-12 flex-row items-center justify-between">
-        <div className={"flex gap-4 items-center"}>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant={"ghost"} size={"icon"} onClick={() => router.back()}><ChevronLeft/></Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Zurück</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <div>
-          <h1 className="truncate font-medium leading-7 md:text-xl">{title}</h1>
-          <p className="text-sm tabular-nums text-muted-foreground">
-            {description}
-          </p>
-        </div>
+        <div className={'flex items-center gap-4'}>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant={'ghost'}
+                  size={'icon'}
+                  onClick={() => router.back()}
+                >
+                  <ChevronLeft />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Zurück</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <div>
+            <h1 className="truncate font-medium leading-7 md:text-xl">
+              {title}
+            </h1>
+            <p className="text-sm tabular-nums text-muted-foreground">
+              {description}
+            </p>
+          </div>
         </div>
         {children}
       </div>

@@ -13,8 +13,9 @@ export default async function Page({
 }: Readonly<{
   searchParams: SelectedSemestersParams;
 }>) {
+  const params = await searchParams;
   const teachingEvents = await fetchTeachingEventsFromSemesters(
-    getSelectedSemesters(searchParams),
+    getSelectedSemesters(params),
   ).then((response) => response.data);
 
   const semesterNames = await fetchSemesterNames().then(

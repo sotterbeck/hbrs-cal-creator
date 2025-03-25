@@ -12,8 +12,9 @@ export default async function Page({
 }: Readonly<{
   searchParams: SelectedSemestersParams;
 }>) {
+  const params = await searchParams;
   const coursesOfStudiesResponse = await fetchCoursesOfStudies();
-  const selectedSemestersCount = getSelectedSemestersCount(searchParams);
+  const selectedSemestersCount = getSelectedSemestersCount(params);
 
   return (
     <>
