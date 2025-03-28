@@ -9,7 +9,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Footer from '@/app/footer';
 
-export default function Home() {
+export default async function Home() {
   return (
     <main>
       <div className="flex flex-col gap-8 bg-cyan-950 px-6 pb-8 pt-24">

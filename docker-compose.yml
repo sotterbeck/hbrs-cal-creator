@@ -8,3 +8,4 @@ services:
       - "3000:3000"
     environment:
       - API_URL=http://backend:8080
+      - PRIVACY_POLICY_URL=https://gist.github.com/sotterbeck/8dfdf24a2a4d6940a1d3af9cf479d7c1
