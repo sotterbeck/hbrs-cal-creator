@@ -2,19 +2,18 @@ import { fetchCoursesOfStudies } from '@/lib/api/data';
 import { SemesterGrid } from '@/components/semesters/semester-grid';
 import {
   getSelectedSemestersCount,
+  resolveParams,
   SelectedSemestersParams,
 } from '@/lib/semester/selectedSemestersParams';
 import SemesterHeaderBar from '@/components/semesters/semester-header-bar';
 import ContinueButton from '@/components/semesters/continue-button';
 
-export default async function Page({
-  searchParams,
-}: Readonly<{
-  searchParams: SelectedSemestersParams;
-}>) {
-  const params = await searchParams;
+export default async function Page(props: {
+  searchParams: Promise<SelectedSemestersParams>;
+}) {
+  const searchParams = await resolveParams(props.searchParams);
   const coursesOfStudiesResponse = await fetchCoursesOfStudies();
-  const selectedSemestersCount = getSelectedSemestersCount(params);
+  const selectedSemestersCount = getSelectedSemestersCount(searchParams);
 
   return (
     <>

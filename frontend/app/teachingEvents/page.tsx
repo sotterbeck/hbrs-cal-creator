@@ -4,18 +4,17 @@ import {
 } from '@/lib/api/data';
 import {
   getSelectedSemesters,
+  resolveParams,
   SelectedSemestersParams,
 } from '@/lib/semester/selectedSemestersParams';
 import TeachingEventChooser from '@/components/teachingEvents/teaching-event-chooser';
 
-export default async function Page({
-  searchParams,
-}: Readonly<{
-  searchParams: SelectedSemestersParams;
-}>) {
-  const params = await searchParams;
+export default async function Page(props: {
+  searchParams: Promise<SelectedSemestersParams>;
+}) {
+  const searchParams = await resolveParams(props.searchParams);
   const teachingEvents = await fetchTeachingEventsFromSemesters(
-    getSelectedSemesters(params),
+    getSelectedSemesters(searchParams),
   ).then((response) => response.data);
 
   const semesterNames = await fetchSemesterNames().then(

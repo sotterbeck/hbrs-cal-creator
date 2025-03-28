@@ -49,3 +49,9 @@ export function addSemesterToParams(
 
   return params;
 }
+
+// Dirty hack to fix the type error and make the search params compatible with Next.js 15.
+// We need to update all usages of search params for the proper migration.
+export async function resolveParams<T>(params: Promise<T>): Promise<T> {
+  return await params;
+}
