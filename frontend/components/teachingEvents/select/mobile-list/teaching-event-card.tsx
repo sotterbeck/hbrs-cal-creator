@@ -25,11 +25,6 @@ export default function TeachingEventCard({
   setSelected,
   className,
 }: Readonly<TeachingEventCardProps>) {
-  function handleCheckedChange() {
-    let newSelectedState = !selected;
-    setSelected(newSelectedState, id);
-  }
-
   return (
     <div
       className={cn('rounded-lg border bg-card p-4 shadow-sm', className, {
@@ -40,7 +35,9 @@ export default function TeachingEventCard({
         <Checkbox
           id={id}
           checked={selected}
-          onCheckedChange={handleCheckedChange}
+          onCheckedChange={(checked) => {
+            return setSelected(checked as boolean, id);
+          }}
         />
         <div className="grid gap-1 leading-none">
           <label

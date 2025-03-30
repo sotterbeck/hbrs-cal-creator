@@ -54,7 +54,7 @@ export function DataTable<TData extends { id: string }, TValue>({
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} >
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id}>
@@ -101,8 +101,7 @@ export function DataTable<TData extends { id: string }, TValue>({
         </Table>
       </div>
       <div className="flex-1 pt-2 text-sm tabular-nums text-muted-foreground">
-        {table.getFilteredSelectedRowModel().rows.length} of{' '}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
+        {table.getFilteredRowModel().rows.length} row(s) found.
       </div>
     </div>
   );

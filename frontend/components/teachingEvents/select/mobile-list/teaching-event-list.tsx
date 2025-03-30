@@ -1,7 +1,7 @@
-import TeachingEventCard from '@/components/teachingEvents/teaching-event-card';
+import TeachingEventCard from '@/components/teachingEvents/select/mobile-list/teaching-event-card';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
-import { SelectedEventsState } from '@/components/teachingEvents/teaching-event-chooser';
+import { SelectedEventsState } from '@/components/teachingEvents/teaching-events';
 
 interface TeachingEventListProps {
   teachingEvents: EventModel[];
@@ -26,7 +26,7 @@ export default function TeachingEventList({
   }
 
   return (
-    <div className={twMerge('container space-y-2', className)}>
+    <div className={twMerge('space-y-2', className)}>
       {teachingEvents.length === 0 && (
         <p className="pt-6 text-center text-muted-foreground">
           Keine Veranstaltungen gefunden.

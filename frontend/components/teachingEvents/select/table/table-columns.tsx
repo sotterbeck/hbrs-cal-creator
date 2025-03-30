@@ -33,7 +33,7 @@ export const columns: ColumnDef<EventModel>[] = [
       const title = row.getValue('title') as string;
 
       return (
-        <div className="font-medium" title={title}>
+        <div className="text-wrap font-medium" title={title}>
           {title}
         </div>
       );
