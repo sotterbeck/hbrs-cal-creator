@@ -23,7 +23,7 @@ export default function Calendar(props: CalendarProps) {
           {weekDays.map((weekDay, index) => (
             <div key={index} className={'pb-4'}>{weekDay}</div>
           ))}
-          {timeIntervals.map((time, index) => (
+          {timeIntervals.map((time) => (
               <div key={time} className={' col-start-1'}>
                 {time.endsWith('00') && (
                     <>

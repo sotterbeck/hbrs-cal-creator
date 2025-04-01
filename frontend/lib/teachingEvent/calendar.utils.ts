@@ -12,12 +12,12 @@ export function getEventCardBorderStyles(types: EventType[]) {
   const tokens = types.map((t) => t.token);
   const borderStyleLookup: { [index: string]: any } = {
     v: 'border-l-4 border-l-primary',
-    ü: 'border-l-4 border-l-accent2',
+    ue: 'border-l-4 border-l-accent2',
     both: 'border-l-4 border-l-accent3',
   };
   if (tokens.length > 1) return borderStyleLookup['both'];
   if (tokens.includes('V')) return borderStyleLookup['v'];
-  if (tokens.includes('Ü')) return borderStyleLookup['ü'];
+  if (tokens.includes('Ü')) return borderStyleLookup['ue'];
 }
 
 export function getEventPosition(event: EventModel) {
