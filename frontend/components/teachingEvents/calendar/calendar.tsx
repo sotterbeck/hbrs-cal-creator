@@ -1,4 +1,5 @@
 import {getEventPosition, getTimeIntervals} from '@/lib/teachingEvent/calendar.utils';
+import CalendarEventCard from "@/components/teachingEvents/calendar/event-card";
 
 interface CalendarProps {
     selectedEvents: EventModel[];
@@ -111,16 +112,19 @@ export default function Calendar(props: CalendarProps) {
                         <div key={index}>{weekDay}</div>
                     ))}
                     {timeIntervals.map((time, index) => (
-                        <div key={time} className={'col-start-1 min-h-4 tabular-nums text-sm text-muted-foreground'}>
-                            {time.endsWith('00') && <div>{time}</div>}
-                        </div>
+                            <div key={time}
+                                 className={'col-start-1 min-h-4 tabular-nums text-sm text-muted-foreground'}>
+                                {time.endsWith('00') && <div>{time}</div>}
+                            </div>
                     ))}
                     {eventsWithPos.map((event, index) => (
                         <div key={index}
-                             className={`bg-blue-500 ${positionStyleMap.colStart[event.positions.colStart]} ${positionStyleMap.rowStart[event.positions.rowStart]} ${positionStyleMap.rowSpan[event.positions.rowSpan]}`}>{event.title}</div>
+                             className={`bg-blue-500 max-w-sm ${positionStyleMap.colStart[event.positions.colStart]} ${positionStyleMap.rowStart[event.positions.rowStart]} ${positionStyleMap.rowSpan[event.positions.rowSpan]}`}>
+                            <CalendarEventCard event={event}></CalendarEventCard></div>
                     ))}
                 </div>
             </div>
         </>
-    );
+    )
+        ;
 }
