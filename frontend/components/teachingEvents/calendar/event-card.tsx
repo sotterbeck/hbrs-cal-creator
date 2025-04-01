@@ -1,4 +1,5 @@
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {getEventCardBorderStyles} from "@/lib/teachingEvent/calendar.utils";
 
 interface CalendarEventCardProps {
     event: EventModel;
@@ -7,7 +8,7 @@ interface CalendarEventCardProps {
 export default function CalendarEventCard(props: CalendarEventCardProps) {
     return (
         <>
-            <Card className={'h-full'}>
+            <Card className={`h-full bg-card ${getEventCardBorderStyles(props.event.types)}`}>
                 <CardHeader>
                     <CardTitle>{props.event.title}</CardTitle>
                 </CardHeader>

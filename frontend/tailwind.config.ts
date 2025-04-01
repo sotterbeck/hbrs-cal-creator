@@ -44,6 +44,12 @@ const config = {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
         },
+        accent2: {
+          DEFAULT: 'hsl(var(--accent2))',
+        },
+        accent3: {
+          DEFAULT: 'hsl(var(--accent3))',
+        },
         popover: {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))',
@@ -126,7 +132,7 @@ const config = {
         'span-22': 'span 22 / span 22',
         'span-23': 'span 23 / span 23',
         'span-24': 'span 24 / span 24',
-      }
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
