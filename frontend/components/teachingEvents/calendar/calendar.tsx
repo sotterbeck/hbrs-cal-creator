@@ -1,54 +1,56 @@
 import {
-  getEventPosition,
-  getTimeIntervals,
+    eventsPerWeekday,
+    getEventPosition,
+    getTimeIntervals,
 } from '@/lib/teachingEvent/calendar.utils';
 import CalendarEventCard from '@/components/teachingEvents/calendar/event-card';
 
 interface CalendarProps {
-  selectedEvents: EventModel[];
+    selectedEvents: EventModel[];
 }
 
 export default function Calendar(props: CalendarProps) {
-  const timeIntervals = getTimeIntervals(8, 20);
-  const weekDays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
-  return (
-    <>
-      <div className={'container'}>
-        <div
-          className={
-            '-z-10 relative grid grid-cols-[auto,1fr,1fr,1fr,1fr,1fr] grid-rows-[auto_repeat(52,minmax(40px,1fr))] gap-x-4 text-left text-xl text-muted-foreground'
-          }
-        >
-          <div className="w-16"></div>
-          {weekDays.map((weekDay, index) => (
-            <div key={index} className={'pb-4'}>{weekDay}</div>
-          ))}
-          {timeIntervals.map((time) => (
-              <div key={time} className={' col-start-1'}>
-                {time.endsWith('00') && (
-                    <>
-                  <div className="absolute w-full border-t border-muted"></div>
-                  <span
-                    className={'text-sm tabular-nums text-muted-foreground'}
-                  >
-                    {time}
-                  </span>
-                    </>
-                )}
-              </div>
-          ))}
-          {props.selectedEvents.map((event, index) => (
-            <div
-              key={index}
-              className={`z-0 ${getEventPosition(event)}`}
-            >
-              <CalendarEventCard event={event}></CalendarEventCard>
+    const timeIntervals = getTimeIntervals(8, 20);
+    const weekDays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
+    //index 0 = Mo etc.
+    const eventsPerDay = eventsPerWeekday(props.selectedEvents)
+    return (
+        <>
+            <div className={'container'}>
+                <div
+                    className={
+                        '-z-10 relative grid grid-cols-[auto,1fr,1fr,1fr,1fr,1fr] grid-rows-[auto_repeat(52,minmax(40px,1fr))] gap-x-4 text-left text-xl text-muted-foreground'
+                    }
+                >
+                    {/*Weekdays*/}
+                    <div className={'grid grid-cols-subgrid col-span-6'}>
+                        <div></div>
+                        {weekDays.map((weekDay, index) => (
+                            <div key={index} className={'pb-4'}>{weekDay}</div>
+                        ))}
+                    </div>
+                    {/*Rows*/}
+                    {timeIntervals.map((time) => (
+                        <div key={time} className={' col-start-1'}>
+                            {time.endsWith('00') && (
+                                <>
+                                    <div className="absolute w-full border-t border-muted"></div>
+                                    <span className={'text-sm tabular-nums text-muted-foreground'}>{time}</span>
+                                </>
+                            )}
+                        </div>
+                    ))}
+                    {/*Subgrid for every Column*/}
+                    <div
+                        className={'col-start-2 row-start-2 row-span-20 grid grid-rows-subgrid grid-cols-[100px,100px,100px] gap-x-2'}>
+                        {eventsPerDay[0].map((event, index) => (
+                            <CalendarEventCard key={index} event={event}></CalendarEventCard>
+                        ))}
+                    </div>
+                </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </>
-  );
+        </>
+    );
 }
 
 export const rowPositionLookup: { [index: string]: any } = {
