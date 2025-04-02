@@ -22,3 +22,9 @@ export default function CalendarEventCard(props: CalendarEventCardProps) {
         </>
     )
 }
+
+export const borderStyleLookup: { [index: string]: any } = {
+    v: 'border-l-4 border-l-primary',
+    ue: 'border-l-4 border-l-accent2',
+    both: 'border-l-4 border-l-accent3',
+};
