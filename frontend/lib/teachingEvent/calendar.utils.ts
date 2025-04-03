@@ -11,6 +11,47 @@ export function getTimeIntervals(startHour: number, endHour: number) {
     return timeIntervals;
 }
 
+export function getCalendarDataDefinition(events: EventModel[]) {
+    const calendarDataDefinition: CalendarDataDefinition = {Mo: {events: [], columns: 0}};
+    events.forEach(event => {
+        const overlap = overlappingElements(calendarDataDefinition.Mo.events, event)
+        if(overlap > calendarDataDefinition.Mo.columns) calendarDataDefinition.Mo.columns = overlap;
+        const uiEvent = {...event, position: getEventPosition(event) + " " + rowPositionLookup['colStart'][overlap]};
+        calendarDataDefinition.Mo.events.push(uiEvent);
+    })
+    return calendarDataDefinition;
+}
+
+function overlappingElements(eventsPerWeekday: EventModel[], eventToCmp: EventModel): number {
+    const eventToCmpStart = +eventToCmp.startTime.split(':').join('');
+    const eventToCmpEnd = +eventToCmp.endTime.split(':').join('');
+    let timesOverlapped = 1;
+    eventsPerWeekday.forEach(event => {
+        const eventStart = +event.startTime.split(':').join('')
+        const eventEnd = +event.endTime.split(':').join('')
+        if ((eventStart <= eventToCmpStart && eventToCmpStart <= eventEnd) || (eventStart <= eventToCmpEnd && eventToCmpEnd <= eventEnd)
+            || (eventToCmpStart <= eventStart && eventStart <= eventToCmpEnd) || (eventToCmpStart <= eventEnd && eventEnd <= eventToCmpEnd)) timesOverlapped += 1;
+    })
+    return timesOverlapped;
+}
+
+function getEventPosition(event: EventModel) {
+    const start = [
+        +event.startTime.split(':')[0],
+        +event.startTime.split(':')[1],
+    ];
+    const end = [+event.endTime.split(':')[0], +event.endTime.split(':')[1]];
+    //First start is 8 | 1 hour is divided in 4 rows | first row for events is 2
+    const rowStart = (start[0] - 8) * 4 + start[1] / 15;
+    //Difference between start and end
+    const rowSpan = (end[0] - 8) * 4 + end[1] / 15 - rowStart;
+    return (
+        rowPositionLookup['rowStart'][rowStart] +
+        ' ' +
+        rowPositionLookup['rowSpan'][rowSpan]
+    );
+}
+
 export function getEventCardStyle(types: EventType[]) {
     const tokens = types.map((t) => t.token);
     if (tokens.length > 1) return cardStyleLookup['both'];
@@ -18,45 +59,13 @@ export function getEventCardStyle(types: EventType[]) {
     if (tokens.includes('Ü')) return cardStyleLookup['ue'];
 }
 
-const weekdayToIndexMap: { [index: string]: any } = {
-    Mo: 0,
-    Di: 1,
-    Mi: 2,
-    Do: 3,
-    Fr: 4,
-};
-
-export function eventsPerWeekday(events: EventModel[]) {
-    const eventsPerWeekday: EventModel[][] = [[],[],[],[],[]]
-    events.forEach(event => {
-        eventsPerWeekday[weekdayToIndexMap[event.day]].push(event);
-    })
-    return eventsPerWeekday;
+interface CalendarDataDefinition {
+    Mo: {
+        events: UiEventModel[],
+        columns: number
+    };
 }
 
-export function getEventPosition(event: EventModel) {
-    const start = [
-        +event.startTime.split(':')[0],
-        +event.startTime.split(':')[1],
-    ];
-    const end = [+event.endTime.split(':')[0], +event.endTime.split(':')[1]];
-    //First start is 8 | 1 hour is divided in 4 rows | first row for events is 2
-    const rowStart = (start[0] - 8) * 4 + start[1] / 15 + 2;
-    //Difference between start and end
-    const rowSpan = (end[0] - 8) * 4 + end[1] / 15 + 2 - rowStart;
-    const weekdayToColMap: { [index: string]: any } = {
-        Mo: 2,
-        Di: 3,
-        Mi: 4,
-        Do: 5,
-        Fr: 6,
-    };
-    const colStart = weekdayToColMap[event.day];
-    return (
-        rowPositionLookup['rowStart'][rowStart] +
-        ' ' +
-        rowPositionLookup['rowSpan'][rowSpan] +
-        ' ' +
-        rowPositionLookup['colStart'][colStart]
-    );
+interface UiEventModel extends EventModel {
+    position: string;
 }

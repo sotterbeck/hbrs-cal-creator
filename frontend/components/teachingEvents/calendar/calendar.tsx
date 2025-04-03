@@ -1,5 +1,5 @@
 import {
-    eventsPerWeekday,
+    getCalendarDataDefinition,
     getEventPosition,
     getTimeIntervals,
 } from '@/lib/teachingEvent/calendar.utils';
@@ -13,7 +13,7 @@ export default function Calendar(props: CalendarProps) {
     const timeIntervals = getTimeIntervals(8, 20);
     const weekDays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
     //index 0 = Mo etc.
-    const eventsPerDay = eventsPerWeekday(props.selectedEvents)
+    const eventsPerDay = getCalendarDataDefinition(props.selectedEvents)
     return (
         <>
             <div className={'container'}>
@@ -43,9 +43,9 @@ export default function Calendar(props: CalendarProps) {
                     {/*Subgrid for every Column*/}
                     <div
                         className={'col-start-2 row-start-2 row-span-20 grid grid-rows-subgrid grid-cols-[100px,100px,100px] gap-x-2'}>
-                        {eventsPerDay[0].map((event, index) => (
+                        {/*{eventsPerDay[0].map((event, index) => (
                             <CalendarEventCard key={index} event={event}></CalendarEventCard>
-                        ))}
+                        ))}*/}
                     </div>
                 </div>
             </div>
@@ -135,6 +135,7 @@ export const rowPositionLookup: { [index: string]: any } = {
         24: 'row-span-24',
     },
     colStart: {
+        1: 'col-start-1',
         2: 'col-start-2',
         3: 'col-start-3',
         4: 'col-start-4',
