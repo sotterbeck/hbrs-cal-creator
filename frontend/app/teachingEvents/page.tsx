@@ -7,7 +7,7 @@ import {
   resolveParams,
   SelectedSemestersParams,
 } from '@/lib/semester/selectedSemestersParams';
-import TeachingEventChooser from '@/components/teachingEvents/teaching-event-chooser';
+import TeachingEvents from '@/components/teachingEvents/teaching-events';
 
 export default async function Page(props: {
   searchParams: Promise<SelectedSemestersParams>;
@@ -17,14 +17,9 @@ export default async function Page(props: {
     getSelectedSemesters(searchParams),
   ).then((response) => response.data);
 
-  const semesterNames = await fetchSemesterNames().then(
-    (response) => response.data,
-  );
-
   return (
-    <TeachingEventChooser
+    <TeachingEvents
       teachingEvents={teachingEvents}
-      semesterNames={semesterNames}
     />
   );
 }
