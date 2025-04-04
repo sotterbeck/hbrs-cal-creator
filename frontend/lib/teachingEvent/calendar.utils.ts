@@ -45,31 +45,6 @@ export function getEventCardStyle(types: EventType[]): string {
 }
 
 /**
- * Is eventToCmp overlapping any other events, move it to next free column
- * **/
-
-/*function getEventColumnPosition(
-  eventsPerWeekday: UiEventModel[],
-  eventToCmp: EventModel,
-): number {
-  const eventToCmpStart = +eventToCmp.startTime.split(':').join('');
-  const eventToCmpEnd = +eventToCmp.endTime.split(':').join('');
-  let column = 1;
-  eventsPerWeekday.forEach((event) => {
-    const eventStart = +event.startTime.split(':').join('');
-    const eventEnd = +event.endTime.split(':').join('');
-    if (
-      (eventStart <= eventToCmpStart && eventToCmpStart <= eventEnd) ||
-      (eventStart <= eventToCmpEnd && eventToCmpEnd <= eventEnd) ||
-      (eventToCmpStart <= eventStart && eventStart <= eventToCmpEnd) ||
-      (eventToCmpStart <= eventEnd && eventEnd <= eventToCmpEnd)
-    )
-      column += 1;
-  });
-  return column;
-}*/
-
-/**
  * Calculates rowStart and rowSpan,
  * every row has to be 15min
  * **/
