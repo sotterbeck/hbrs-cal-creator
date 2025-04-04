@@ -40,6 +40,7 @@ export function getEventCardStyle(types: EventType[]): string {
   if (tokens.length > 1) return 'both';
   if (tokens.includes('V')) return 'v';
   if (tokens.includes('Ü')) return 'ue';
+  if (tokens.includes('P')) return 'p';
   return '';
 }
 

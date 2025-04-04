@@ -13,53 +13,68 @@ export default function Calendar(props: CalendarProps) {
   const calendarData = getCalendarData(props.selectedEvents);
   return (
     <>
-      <div className={'relative container overflow-x-scroll'}>
-        <div
-          className={
-            '-z-10 grid grid-cols-[auto,1fr,1fr,1fr,1fr,1fr] grid-rows-[auto_repeat(52,20px)] gap-x-4 text-left text-xl text-muted-foreground'
-          }
-        >
-          {/*Weekdays*/}
-          <div className={'col-span-6 grid grid-cols-subgrid'}>
-            <div></div>
-            {calendarData.map((data, index) => (
-              <div key={index} className={'pb-4'}>
-                {data.name}
-              </div>
-            ))}
-          </div>
-          {/*Rows*/}
-          {timeIntervals.map((time) => (
-              <div key={time} className={'col-start-1'}>
-                {time.endsWith('00') && (
-                    <>
-                      <div className="absolute w-full border-t border-muted overflow-hidden"></div>
-                      <span
-                          className={'text-sm tabular-nums text-muted-foreground'}
-                      >
-                    {time}
-                  </span>
-                    </>
-                )}
-              </div>
-          ))}
-          {/*Subgrid for every Column*/}
+      <div
+        className={
+          'grid-rows-[auto_repeat(52,minmax(1fr,30px)] my-10 grid w-full grid-cols-[auto,1fr,1fr,1fr,1fr,1fr] overflow-x-auto border-r pb-2 text-left text-xl text-muted-foreground'
+        }
+      >
+        <div className={'col-span-6 col-start-2 grid grid-cols-subgrid'}>
           {calendarData.map((data, index) => (
-            <div
-                key={index}
-              className={`${positionStylesLookup['colStart'][index + 2]} row-span-54 row-start-2 grid grid-rows-subgrid gap-x-2`}
-            >
-              {data.events.map((event, index) => (
-                <div
-                  key={index}
-                  className={`z-0 ${positionStylesLookup['rowStart'][data.events[index].position.rowStart]} ${positionStylesLookup['rowSpan'][data.events[index].position.rowSpan]}`}
-                >
-                  <CalendarEventCard event={event}></CalendarEventCard>
-                </div>
-              ))}
+            <div key={index} className={'pb-2 pl-2'}>
+              {data.name}
             </div>
           ))}
         </div>
+        <div
+          className={
+            'sticky left-0 col-start-1 row-span-54 row-start-1 grid grid-rows-subgrid border-r bg-zinc-50 pr-4 dark:bg-black'
+          }
+        >
+          <div></div>
+          {timeIntervals.map((time, index) => (
+            <div key={index} className={'text-sm tabular-nums'}>
+              {time.endsWith('00') ? (
+                <p className={'-translate-y-2.5'}>{time}</p>
+              ) : (
+                <p className={'invisible'}>{time}</p>
+              )}
+            </div>
+          ))}
+        </div>
+        <div
+          className={
+            'col-span-6 col-start-1 row-span-54 row-start-2 grid grid-cols-subgrid grid-rows-subgrid'
+          }
+        >
+          {timeIntervals.map((time, index) =>
+            time.endsWith('00') ? (
+              <div
+                key={index}
+                className={`col-span-6 col-start-2 border-t border-muted-foreground/60`}
+              ></div>
+            ) : (
+              <div
+                key={index}
+                className={`col-span-6 col-start-2 border-t`}
+              ></div>
+            ),
+          )}
+        </div>
+        {calendarData.map((data, index) => (
+          <div
+            key={index}
+            className={`${positionStylesLookup['colStart'][index + 2]} row-span-54 row-start-2 grid grid-rows-subgrid gap-x-2 border-r px-4`}
+          >
+            {data.events.map((event, index) => (
+              <div
+                key={index}
+                className={`${positionStylesLookup['rowStart'][data.events[index].position.rowStart]} ${positionStylesLookup['rowSpan'][data.events[index].position.rowSpan]}`}
+              >
+                <CalendarEventCard event={event}></CalendarEventCard>
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
     </>
   );

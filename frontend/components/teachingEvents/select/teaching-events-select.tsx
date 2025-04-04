@@ -16,7 +16,7 @@ interface TeachingEventsSelectProps {
 
 export default function TeachingEventsSelect(props: TeachingEventsSelectProps) {
     return (
-        <>
+        <div className={'mb-10'}>
             <TeachingEventFilter
                 searchQuery={props.searchQuery}
                 setSearchQuery={props.setSearchQuery}
@@ -34,6 +34,6 @@ export default function TeachingEventsSelect(props: TeachingEventsSelectProps) {
                 setRowSelection={props.setSelectedEvents}
                 className={'hidden lg:block'}
             />
-        </>
+        </div>
     );
 }
