@@ -6,9 +6,8 @@ interface CalendarEventCardProps {
 
 export default function CalendarEventCard(props: CalendarEventCardProps) {
   return (
-    <>
       <div
-        className={`h-full rounded p-2 ${cardStyleLookup[getEventCardStyle(props.event.types)]}`}
+        className={`text-wrap min-w-full max-w-min md:w-auto h-full rounded p-2 ${cardStyleLookup[getEventCardStyle(props.event.types)]}`}
       >
         <p className={'text-xs font-bold'}>{props.event.title}</p>
         <p className={'text-xs'}>
@@ -17,7 +16,6 @@ export default function CalendarEventCard(props: CalendarEventCardProps) {
         <p className={'text-xs'}>{props.event.room}</p>
         <p className={'text-xs'}>{props.event.instructor}</p>
       </div>
-    </>
   );
 }
 

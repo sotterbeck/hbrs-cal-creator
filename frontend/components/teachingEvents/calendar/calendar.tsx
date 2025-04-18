@@ -13,21 +13,44 @@ export default function Calendar(props: CalendarProps) {
   const calendarData = getCalendarData(props.selectedEvents);
   return (
     <>
+      {/*Small screen*/}
+      <div className={'md:hidden flex h-screen snap-x gap-8 overflow-x-auto p-4'}>
+        {calendarData.map((day) => (
+          <div
+            key={day.name}
+            id={day.name}
+            className={'flex min-w-full snap-center flex-col'}
+          >
+            <div
+              className={
+                'sticky left-0 self-center text-2xl text-muted-foreground'
+              }
+            >
+              {day.name}
+            </div>
+            <div className={'grid gap-1 overflow-hidden'}>
+              {day.events.map((event, index) => (
+                <div
+                  key={index}
+                  className={`${positionStylesLookup['rowStart'][event.position.rowStart]} ${positionStylesLookup['rowSpan'][event.position.rowSpan]}`}
+                >
+                  <CalendarEventCard event={event}></CalendarEventCard>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      {/*Large screen*/}
       <div
         className={
-          'grid-rows-[auto_repeat(52,minmax(1fr,30px)] my-10 grid w-full grid-cols-[auto,1fr,1fr,1fr,1fr,1fr] overflow-x-auto border-r pb-2 text-left text-xl text-muted-foreground'
+          'my-10 hidden w-full grid-cols-[56px,1fr,1fr,1fr,1fr,1fr] overflow-x-auto border-r pb-2 text-left text-xl text-muted-foreground md:visible md:grid'
         }
       >
-        <div className={'col-span-6 col-start-2 grid grid-cols-subgrid'}>
-          {calendarData.map((data, index) => (
-            <div key={index} className={'pb-2 pl-2'}>
-              {data.name}
-            </div>
-          ))}
-        </div>
+        {/*Time*/}
         <div
           className={
-            'sticky left-0 col-start-1 row-span-54 row-start-1 grid grid-rows-subgrid border-r bg-zinc-50 pr-4 dark:bg-black'
+            'sticky left-0 col-start-1 row-span-54 grid grid-rows-subgrid border-r bg-zinc-50 pr-4 dark:bg-black'
           }
         >
           <div></div>
@@ -41,34 +64,38 @@ export default function Calendar(props: CalendarProps) {
             </div>
           ))}
         </div>
+
+        {/*Lines*/}
         <div
           className={
-            'col-span-6 col-start-1 row-span-54 row-start-2 grid grid-cols-subgrid grid-rows-subgrid'
+            'col-span-6 col-start-2 row-span-54 row-start-2 grid grid-cols-subgrid grid-rows-subgrid'
           }
         >
           {timeIntervals.map((time, index) =>
             time.endsWith('00') ? (
               <div
                 key={index}
-                className={`col-span-6 col-start-2 border-t border-muted-foreground/60`}
+                className={`col-span-6 border-t border-muted-foreground/60`}
               ></div>
             ) : (
-              <div
-                key={index}
-                className={`col-span-6 col-start-2 border-t`}
-              ></div>
+              <div key={index} className={`col-span-6 border-t`}></div>
             ),
           )}
         </div>
-        {calendarData.map((data, index) => (
+
+        {/*Events*/}
+        {calendarData.map((day, index) => (
           <div
             key={index}
-            className={`${positionStylesLookup['colStart'][index + 2]} row-span-54 row-start-2 grid grid-rows-subgrid gap-x-2 border-r px-4`}
+            className={`${positionStylesLookup['colStart'][index + 2]} row-span-54 row-start-1 grid grid-rows-subgrid gap-x-2 border-r px-4`}
           >
-            {data.events.map((event, index) => (
+            <p className={'sticky left-14 -z-10 mb-4 pl-4 text-2xl'}>
+              {day.name}
+            </p>
+            {day.events.map((event, index) => (
               <div
                 key={index}
-                className={`${positionStylesLookup['rowStart'][data.events[index].position.rowStart]} ${positionStylesLookup['rowSpan'][data.events[index].position.rowSpan]}`}
+                className={`${positionStylesLookup['rowStart'][event.position.rowStart]} ${positionStylesLookup['rowSpan'][event.position.rowSpan]}`}
               >
                 <CalendarEventCard event={event}></CalendarEventCard>
               </div>
