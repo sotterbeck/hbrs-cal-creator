@@ -54,8 +54,8 @@ function getEventRowPosition(event: EventModel) {
     +event.startTime.split(':')[1],
   ];
   const end = [+event.endTime.split(':')[0], +event.endTime.split(':')[1]];
-  const rowStart = (start[0] - 8) * 4 + start[1] / 15 + 1;
-  const rowSpan = (end[0] - 8) * 4 + end[1] / 15 - rowStart + 1;
+  const rowStart = (start[0] - 8) * 4 + start[1] / 15 + 2;
+  const rowSpan = (end[0] - 8) * 4 + end[1] / 15 - rowStart + 2;
   return [rowStart, rowSpan];
 }
 
