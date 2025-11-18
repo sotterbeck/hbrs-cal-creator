@@ -9,6 +9,7 @@ import de.sotterbeck.hbrscalcreator.common.toUtilDate
 import de.sotterbeck.hbrscalcreator.teachingEvent.TeachingEventDto
 import de.sotterbeck.hbrscalcreator.teachingEvent.entity.TeachingEvents
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.TimeZone
 
 /**
@@ -19,9 +20,10 @@ class BiWeeklyICalGenerator : ICalGenerator {
     override fun generateICal(teachingEvents: List<TeachingEventDto>): String {
         val iCal = ICalendar()
 
-        // Set the timezone for all events to Europe/Berlin (handles DST automatically)
-        val timezone = TimeZone.getTimeZone("Europe/Berlin")
-        val timezoneAssignment = TimezoneAssignment(timezone, "Europe/Berlin")
+        // Set the timezone for all events from system default (handles DST automatically)
+        val zoneId = ZoneId.systemDefault()
+        val timezone = TimeZone.getTimeZone(zoneId)
+        val timezoneAssignment = TimezoneAssignment(timezone, zoneId.id)
         iCal.timezoneInfo.defaultTimezone = timezoneAssignment
 
         for (teachingEvent in teachingEvents) {
