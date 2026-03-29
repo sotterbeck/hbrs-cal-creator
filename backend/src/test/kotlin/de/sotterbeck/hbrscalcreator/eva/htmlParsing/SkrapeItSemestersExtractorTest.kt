@@ -65,8 +65,9 @@ class SkrapeItSemestersExtractorTest {
                       <option value="">*** bitte auswählen ***</option>
                       <option value="#SPLUS42C544">BCSP 1</option>
                       <option value="#SPLUSD4951B">BCSP 2</option>
+                      <option value="#SPLUS098663">BCSP 2 (PO 2021)</option>
                       <option value="#SPLUS42C545">BCSP 3</option>
-                      <option value="#SPLUS4BB425">BCSP 4</option>
+                      <option value="#SPLUS4BB425">BCSP 4 (PO 2021)</option>
                       <option value="#SPLUS42C53D">BI 1</option>
                       <option value="BCS2">BI 2</option>
                       <option value="#SPLUS42C53E">BI 3</option>
@@ -116,8 +117,9 @@ class SkrapeItSemestersExtractorTest {
             listOf(
                 SemesterDto("BCSP 1", "#SPLUS42C544"),
                 SemesterDto("BCSP 2", "#SPLUSD4951B"),
+                SemesterDto("BCSP 2 (PO 2021)", "#SPLUS098663"),
                 SemesterDto("BCSP 3", "#SPLUS42C545"),
-                SemesterDto("BCSP 4", "#SPLUS4BB425"),
+                SemesterDto("BCSP 4 (PO 2021)", "#SPLUS4BB425"),
                 SemesterDto("BI 1", "#SPLUS42C53D"),
                 SemesterDto("BI 2", "BCS2"),
                 SemesterDto("BI 3", "#SPLUS42C53E"),

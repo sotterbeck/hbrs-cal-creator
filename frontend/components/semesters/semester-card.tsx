@@ -14,6 +14,17 @@ import {
   useSearchParams,
 } from 'next/navigation';
 import { getSelectedSemesters } from '@/lib/semester/selectedSemestersParams';
+import {
+  normalizeSemesterToken,
+  parseSemesterLabel,
+} from '@/lib/semester/semesterLabel';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { cn } from '@/lib/utils';
 
 export function SemesterCard({
   course,
@@ -54,13 +65,39 @@ export function SemesterCard({
             readOnlySearchParams,
           )}
         >
-          {course.semesters.map((semester) => {
-            return (
-              <ToggleGroupItem key={semester} value={semester.toString()}>
-                {semester}
-              </ToggleGroupItem>
-            );
-          })}
+          <TooltipProvider>
+            {course.semesters.map((semester) => {
+              const semesterValue = normalizeSemesterToken(semester);
+              const { displayLabel, poYear } = parseSemesterLabel(semester);
+              const isOldPo = Boolean(poYear);
+              if (!isOldPo) {
+                return (
+                  <ToggleGroupItem key={semesterValue} value={semesterValue}>
+                    {displayLabel}
+                  </ToggleGroupItem>
+                );
+              }
+
+              return (
+                <ToggleGroupItem
+                  key={semesterValue}
+                  value={semesterValue}
+                  className={cn('text-amber-600 dark:text-amber-400')}
+                >
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="inline-flex h-full w-full items-center justify-center">
+                        {displayLabel}
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>PO {poYear}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </ToggleGroupItem>
+              );
+            })}
+          </TooltipProvider>
         </ToggleGroup>
       </CardContent>
     </Card>
@@ -68,7 +105,9 @@ export function SemesterCard({
 }
 
 function getCourseIds(abbreviation: string, semesters: string[]) {
-  return semesters.map((semester) => `${abbreviation}${semester}`);
+  return semesters.map((semester) =>
+    normalizeSemesterToken(`${abbreviation}${semester}`),
+  );
 }
 
 function getSelectedCourseSemesters(
@@ -82,7 +121,9 @@ function getSelectedCourseSemesters(
 
   return selectedSemesters
     .filter((semester) => semester.startsWith(abbreviation))
-    .map((semester) => semester.replace(abbreviation, ''));
+    .map((semester) =>
+      normalizeSemesterToken(semester.replace(abbreviation, '').trim()),
+    );
 }
 
 function updateSelectedSemestersInParams(

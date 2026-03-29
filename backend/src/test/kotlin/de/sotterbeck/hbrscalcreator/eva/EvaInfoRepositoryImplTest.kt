@@ -64,6 +64,7 @@ class EvaInfoRepositoryImplTest {
         val semesters = listOf(
             SemesterDto("BCSP 1", "#SPLUS42C544"),
             SemesterDto("BCSP 2", "#SPLUSD4951B"),
+            SemesterDto("BCSP 2 (PO 2021)", "#SPLUS098663"),
             SemesterDto("BCSP 3", "#SPLUS42C545"),
             SemesterDto("BCSP 4", "#SPLUS4BB425")
         )
@@ -89,14 +90,15 @@ class EvaInfoRepositoryImplTest {
         val semesters = listOf(
             SemesterDto("BCSP 1", "#SPLUS42C544"),
             SemesterDto("BCSP 2", "#SPLUSD4951B"),
+            SemesterDto("BCSP 2 (PO 2021)", "#SPLUS098663"),
             SemesterDto("BCSP 3", "#SPLUS42C545"),
             SemesterDto("BCSP 4", "#SPLUS4BB425")
         )
         coEvery { semestersExtractor.extractSemesters(MockEvaDispatcher.mainPageHtml) } returns semesters
 
-        val result = runBlocking { uut.findEvaIdByToken("BCSP1") }
+        val result = runBlocking { uut.findEvaIdByToken("BCSP2(PO2021)") }
 
-        assertThat(result).isEqualTo("#SPLUS42C544")
+        assertThat(result).isEqualTo("#SPLUS098663")
     }
 
     @Test

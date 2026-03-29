@@ -5,7 +5,7 @@ interface CoursesOfStudyResponse {
 interface CourseOfStudyModel {
   name: string;
   abbreviation: string;
-  semesters: number[];
+  semesters: string[];
 }
 
 interface SemesterNamesResponse {

@@ -6,6 +6,7 @@ import {
   getSelectedSemesters,
   removeSemesterFromParams,
 } from '@/lib/semester/selectedSemestersParams';
+import { normalizeSemesterToken } from '@/lib/semester/semesterLabel';
 import { Button } from '@/components/ui/button';
 import { useSearchParamsManipulation } from '@/lib/common/useSearchParamsManipulation';
 import { useState } from 'react';
@@ -45,7 +46,7 @@ export function SemesterFilter({
       <p className="font-medium">Semester</p>
       {semesters.map((semester) => (
         <SemesterCheckbox
-          key={semester.replace(' ', '')}
+          key={normalizeSemesterToken(semester)}
           semester={semester}
           selectedSemesterIds={selectedSemesterIds}
           searchParams={readonlyURLSearchParams}
@@ -72,7 +73,7 @@ function SemesterCheckbox({
   pathname,
   replace,
 }: Readonly<SemesterCheckboxProps>) {
-  const semesterToken = semester.replace(' ', '');
+  const semesterToken = normalizeSemesterToken(semester);
 
   function handleCheckedChange(checked: boolean) {
     const params = checked
