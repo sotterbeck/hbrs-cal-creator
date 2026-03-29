@@ -20,6 +20,7 @@ class GetAllSemesterNamesInteractorImplTest {
         coEvery { evaInfoRepository.findAllSemesters() } returns listOf(
             SemesterDto("BCSP 1", "#SPLUS42C544"),
             SemesterDto("BCSP 2", "#SPLUSD4951B"),
+            SemesterDto("BCSP 2 (PO 2021)", "#SPLUS098663"),
             SemesterDto("BCSP 3", "#SPLUS42C545"),
             SemesterDto("BCSP 4", "#SPLUS4BB425"),
             SemesterDto("BI 1", "#SPLUS42C53D"),
@@ -66,6 +67,7 @@ class GetAllSemesterNamesInteractorImplTest {
         assertThat(response.data).containsExactlyInAnyOrder(
             "BCSP 1",
             "BCSP 2",
+            "BCSP 2 (PO 2021)",
             "BCSP 3",
             "BCSP 4",
             "BI 1",

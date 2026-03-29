@@ -11,6 +11,6 @@ interface GetAllCoursesOfStudyInteractor {
     data class CourseOfStudyModel(
         val name: String,
         val abbreviation: String,
-        val semesters: Set<Int>
+        val semesters: Set<String>
     )
 }

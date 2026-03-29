@@ -41,13 +41,23 @@ class DefaultCourseOfStudyPresenter : CourseOfStudyPresenter {
         val abbreviation = semesterName.substringBefore(" ")
         val courseOfStudyName = getCourseOfStudyName(abbreviation)
 
-        val semesterNum = semesterName.substringAfter(" ").toIntOrNull() ?: 1
+        val semesterLabel = extractSemesterLabel(semesterName, abbreviation)
 
         return GetAllCoursesOfStudyInteractor.CourseOfStudyModel(
             name = courseOfStudyName,
             abbreviation = abbreviation,
-            semesters = setOf(semesterNum)
+            semesters = setOf(semesterLabel)
         )
+    }
+
+    private fun extractSemesterLabel(semesterName: String, abbreviation: String): String {
+        val label = semesterName.removePrefix(abbreviation).trim()
+        if (label.isNotEmpty()) {
+            return label
+        }
+
+        val number = semesterName.substringAfterLast(" ").toIntOrNull()
+        return number?.toString() ?: "1"
     }
 
     private fun getCourseOfStudyName(abbreviation: String): String {

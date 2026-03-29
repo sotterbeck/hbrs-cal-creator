@@ -14,6 +14,13 @@ import {
   useSearchParams,
 } from 'next/navigation';
 import { getSelectedSemesters } from '@/lib/semester/selectedSemestersParams';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { cn } from '@/lib/utils';
 
 export function SemesterCard({
   course,
@@ -54,13 +61,37 @@ export function SemesterCard({
             readOnlySearchParams,
           )}
         >
-          {course.semesters.map((semester) => {
-            return (
-              <ToggleGroupItem key={semester} value={semester.toString()}>
-                {semester}
-              </ToggleGroupItem>
-            );
-          })}
+          <TooltipProvider>
+            {course.semesters.map((semester) => {
+              const semesterValue = normalizeSemesterValue(semester);
+              const { displayLabel, poYear } = parseSemesterLabel(semester);
+              const isOldPo = Boolean(poYear);
+              const toggleItem = (
+                <ToggleGroupItem
+                  key={semesterValue}
+                  value={semesterValue}
+                  className={cn(
+                    isOldPo && 'text-amber-600 dark:text-amber-400',
+                  )}
+                >
+                  {displayLabel}
+                </ToggleGroupItem>
+              );
+
+              if (!isOldPo) {
+                return toggleItem;
+              }
+
+              return (
+                <Tooltip key={semesterValue}>
+                  <TooltipTrigger asChild>{toggleItem}</TooltipTrigger>
+                  <TooltipContent>
+                    <p>PO {poYear}</p>
+                  </TooltipContent>
+                </Tooltip>
+              );
+            })}
+          </TooltipProvider>
         </ToggleGroup>
       </CardContent>
     </Card>
@@ -68,7 +99,9 @@ export function SemesterCard({
 }
 
 function getCourseIds(abbreviation: string, semesters: string[]) {
-  return semesters.map((semester) => `${abbreviation}${semester}`);
+  return semesters.map((semester) =>
+    normalizeSemesterToken(`${abbreviation}${semester}`),
+  );
 }
 
 function getSelectedCourseSemesters(
@@ -82,7 +115,30 @@ function getSelectedCourseSemesters(
 
   return selectedSemesters
     .filter((semester) => semester.startsWith(abbreviation))
-    .map((semester) => semester.replace(abbreviation, ''));
+    .map((semester) => semester.replace(abbreviation, '').trim());
+}
+
+function normalizeSemesterToken(semesterName: string): string {
+  return semesterName.replaceAll(' ', '');
+}
+
+function normalizeSemesterValue(semesterLabel: string): string {
+  return semesterLabel.replaceAll(' ', '');
+}
+
+function parseSemesterLabel(semesterLabel: string): {
+  displayLabel: string;
+  poYear?: string;
+} {
+  const match = semesterLabel.match(/^(\d+)\s*(?:\(PO\s*(\d{4})\))?/);
+  if (match) {
+    return {
+      displayLabel: match[1],
+      poYear: match[2] ?? undefined,
+    };
+  }
+
+  return { displayLabel: semesterLabel };
 }
 
 function updateSelectedSemestersInParams(
