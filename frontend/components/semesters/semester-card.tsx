@@ -15,6 +15,10 @@ import {
 } from 'next/navigation';
 import { getSelectedSemesters } from '@/lib/semester/selectedSemestersParams';
 import {
+  normalizeSemesterToken,
+  parseSemesterLabel,
+} from '@/lib/semester/semesterLabel';
+import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -63,32 +67,34 @@ export function SemesterCard({
         >
           <TooltipProvider>
             {course.semesters.map((semester) => {
-              const semesterValue = normalizeSemesterValue(semester);
+              const semesterValue = normalizeSemesterToken(semester);
               const { displayLabel, poYear } = parseSemesterLabel(semester);
               const isOldPo = Boolean(poYear);
-              const toggleItem = (
-                <ToggleGroupItem
-                  key={semesterValue}
-                  value={semesterValue}
-                  className={cn(
-                    isOldPo && 'text-amber-600 dark:text-amber-400',
-                  )}
-                >
-                  {displayLabel}
-                </ToggleGroupItem>
-              );
-
               if (!isOldPo) {
-                return toggleItem;
+                return (
+                  <ToggleGroupItem key={semesterValue} value={semesterValue}>
+                    {displayLabel}
+                  </ToggleGroupItem>
+                );
               }
 
               return (
-                <Tooltip key={semesterValue}>
-                  <TooltipTrigger asChild>{toggleItem}</TooltipTrigger>
-                  <TooltipContent>
-                    <p>PO {poYear}</p>
-                  </TooltipContent>
-                </Tooltip>
+                <ToggleGroupItem
+                  key={semesterValue}
+                  value={semesterValue}
+                  className={cn('text-amber-600 dark:text-amber-400')}
+                >
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="inline-flex h-full w-full items-center justify-center">
+                        {displayLabel}
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>PO {poYear}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </ToggleGroupItem>
               );
             })}
           </TooltipProvider>
@@ -115,30 +121,9 @@ function getSelectedCourseSemesters(
 
   return selectedSemesters
     .filter((semester) => semester.startsWith(abbreviation))
-    .map((semester) => semester.replace(abbreviation, '').trim());
-}
-
-function normalizeSemesterToken(semesterName: string): string {
-  return semesterName.replaceAll(' ', '');
-}
-
-function normalizeSemesterValue(semesterLabel: string): string {
-  return semesterLabel.replaceAll(' ', '');
-}
-
-function parseSemesterLabel(semesterLabel: string): {
-  displayLabel: string;
-  poYear?: string;
-} {
-  const match = semesterLabel.match(/^(\d+)\s*(?:\(PO\s*(\d{4})\))?/);
-  if (match) {
-    return {
-      displayLabel: match[1],
-      poYear: match[2] ?? undefined,
-    };
-  }
-
-  return { displayLabel: semesterLabel };
+    .map((semester) =>
+      normalizeSemesterToken(semester.replace(abbreviation, '').trim()),
+    );
 }
 
 function updateSelectedSemestersInParams(

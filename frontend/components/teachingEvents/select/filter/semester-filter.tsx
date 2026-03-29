@@ -6,6 +6,7 @@ import {
   getSelectedSemesters,
   removeSemesterFromParams,
 } from '@/lib/semester/selectedSemestersParams';
+import { normalizeSemesterToken } from '@/lib/semester/semesterLabel';
 import { Button } from '@/components/ui/button';
 import { useSearchParamsManipulation } from '@/lib/common/useSearchParamsManipulation';
 import { useState } from 'react';
@@ -97,8 +98,4 @@ function SemesterCheckbox({
       </label>
     </div>
   );
-}
-
-function normalizeSemesterToken(semesterName: string): string {
-  return semesterName.replaceAll(' ', '');
 }

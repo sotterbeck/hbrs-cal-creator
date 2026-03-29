@@ -23,6 +23,10 @@ export default async function Page(props: {
           courses={coursesOfStudiesResponse.data}
           className="container pt-6"
         />
+        <div className="container flex items-center gap-2 py-4">
+          <div className="size-4 rounded bg-amber-600 dark:bg-amber-400" />
+          <span className="text-muted-foreground">Alte Prüfungsordnung</span>
+        </div>
         <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-zinc-50 py-6 dark:from-background md:invisible">
           <div className="container flex justify-end">
             <ContinueButton />
